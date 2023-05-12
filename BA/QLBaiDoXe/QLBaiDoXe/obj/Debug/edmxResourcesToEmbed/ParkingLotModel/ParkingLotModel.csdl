@@ -26,6 +26,7 @@
       <PropertyRef Name="ParkingCardID" />
     </Key>
     <Property Name="ParkingCardID" Type="Int64" Nullable="false" />
+    <Property Name="CardType" Type="Int32" Nullable="false" />
     <Property Name="CardState" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Vehicles" Relationship="Self.Vehicles_CardID_FK" FromRole="ParkingCards" ToRole="Vehicles" />
   </EntityType>
@@ -115,7 +116,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="Accounts_StaffID_FK">
-    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Accounts" Type="Self.Account" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Staff">
@@ -151,7 +154,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="Receipts_StaffID_FK">
-    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Receipts" Type="Self.Receipt" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Staff">
@@ -187,7 +192,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="Timekeeps_StaffID_FK">
-    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Timekeeps" Type="Self.Timekeep" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Staff">
