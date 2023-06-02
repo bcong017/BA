@@ -20,24 +20,61 @@
             <DatePicker x:Name="EndDateDP" materialDesign:HintAssist.Hint="Đến ngày" HorizontalAlignment="Left" Height="39.946" Margin="795.73,24.654,0,0" VerticalAlignment="Top" Width="185.07" RenderTransformOrigin="0.651,0.512" FontSize="20" Focusable="False" SelectedDateChanged="EndDateDP_SelectedDateChanged"/>
 
         </Grid>
-        <Grid Margin="10,236,16.4,31.332">
-            <Rectangle Fill="White" HorizontalAlignment="Left" Height="452.668" Margin="1.5,-9,-1.5,0" VerticalAlignment="Top" Width="1012.6" RadiusX="20" RadiusY="20"/>
-            <ListView x:Name="TimekeepLV" HorizontalAlignment="Left" Height="431.068" VerticalAlignment="Top" Width="1012.6" Margin="1.5,0,-1.5,0" HorizontalContentAlignment="Center">
+        <Grid Margin="10,220,16.4,45">
+            <Rectangle Fill="White"  
+                       RadiusX="20" RadiusY="20"/>
+            <ListView x:Name="TimekeepLV" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Staff.StaffID}"/>
-                        <GridViewColumn Header="Tên nhân viên" DisplayMemberBinding="{Binding Staff.StaffName}"/>
-                        <GridViewColumn Header="Giờ đăng nhập" DisplayMemberBinding="{Binding LoginTime}"/>
-                        <GridViewColumn Header="Giờ đăng xuất" DisplayMemberBinding="{Binding LogoutTime}"/>
+                        <GridViewColumn Header="STT">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding STT}" HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="ID">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding StaffID}" HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Tên nhân viên">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Staff.StaffName}" HorizontalAlignment="Left"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Thời điểm đăng nhập">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LoginTime, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" HorizontalAlignment="Center"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Thời điểm đăng xuất">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LogoutTime, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" HorizontalAlignment="Center"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
 
         </Grid>
         <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Height="80" Margin="35,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="485" FontSize="42" Text="Bảng chấm công"/>
-        <Image Margin="940.52,2.8,3.813,620.4" Source="Image4.png" Stretch="Fill"/>
+        <Image Margin="940.52,2.8,3.813,620.4" Source="Resources/Image4.png" Stretch="Fill"/>
         <TextBlock Text="CÔNG TY THNM BÃI ĐỖ XE THÔNG MINH KYPS" HorizontalAlignment="Left" Height="18.8" Margin="661.853,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="273.667" FontWeight="Bold" FontFamily="Segoe UI"/>
-        <TextBlock HorizontalAlignment="Left" Height="31.05" Margin="663.353,43.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268.667" TextAlignment="Right" FontSize="10"><Run Text="Điện thoại: (094).8423.014"/><LineBreak/><Run Text="Email: 20521868@gm.uit.edu.vn"/><LineBreak/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="31.05" Margin="663.353,43.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268.667" TextAlignment="Right" FontSize="10"><Run Text="Điện thoại: (094).8423.014"/><LineBreak/><Run Text="Email: 20520417@gm.uit.edu.vn"/><LineBreak/></TextBlock>
 
     </Grid>
 </UserControl>

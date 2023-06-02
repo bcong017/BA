@@ -1,20 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.ExceptionServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.TextFormatting;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using LiveCharts;
-using LiveCharts.Helpers;
 using LiveCharts.Wpf;
 using QLBaiDoXe.DBClasses;
 using QLBaiDoXe.ParkingLotModel;
@@ -30,12 +20,15 @@ namespace QLBaiDoXe
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
 
+        public bool first = true;
+
         public BaoCaoDoanhThu()
         {
             InitializeComponent();
             SeriesCollection = new SeriesCollection();
             UpdateReport(DateTime.Now.Year);
 
+            YearTextbox.Text = DateTime.Now.Year.ToString();
             Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
             YFormatter = value => value + "";
 
@@ -58,11 +51,20 @@ namespace QLBaiDoXe
 
         private void YearTextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (first)
+            {
+                first = false; return;
+            }
+            
             bool isNumber = int.TryParse(YearTextbox.Text, out int year);
-            if (isNumber)
+            if (isNumber && year >= (DateTime.Now.Year-10) && year <= (DateTime.Now.Year))
+            {
+                SeriesCollection.Clear();
                 UpdateReport(year);
+            }
+
             else
-            {               
+            {
                 return;
             }
         }
@@ -74,10 +76,11 @@ namespace QLBaiDoXe
 
         private void UpdateReport(int year)
         {
-            FinancialReport financialReport;
             List<VehicleType> vehicleTypes = Regulation.GetAllVehicleTypes();
+            List<VehicleType> vehicleTypeTemp = Regulation.GetAllVehicleTypes();
             List<LineSeries> lineSeries = new List<LineSeries>();
             int total = 0;
+
             for (int i = 0; i < vehicleTypes.Count; i++)
             {
                 lineSeries.Add(new LineSeries()
@@ -86,10 +89,10 @@ namespace QLBaiDoXe
                     Values = new ChartValues<int>()
                 });
             }
-            for (int m = 1; m <= 12; m++)
+
+            for ( int m = 1; m <= 12; m++)
             {
-                financialReport = Finance.GetFinancialReportForDate(m, year);
-                if (financialReport == null)
+                if (ParkingVehicle.GetAllParkedOutVehicle(m,year).Count == 0)
                 {
                     for (int j = 0; j < lineSeries.Count; j++)
                     {
@@ -98,19 +101,22 @@ namespace QLBaiDoXe
                 }
                 else
                 {
-                    for (int j = 0; j < lineSeries.Count; j++)
+                    for (int j = 0;j < lineSeries.Count; j++)
                     {
                         int income = 0;
-                        List<Receipt> receipts = financialReport.Receipts.ToList();
-                        for (int k = 0; k < financialReport.Receipts.Count; k++)
+                        var vehicleFee = ParkingVehicle.GetAllParkedOutVehicle(m, year);
+
+                        lineSeries[j].Values.Add(vehicleFee.Where(x => x.VehicleType.VehicleTypeName == lineSeries[j].Title).Count()); //Thêm dòng với điều kiện:   Loại xe đó giống với tên loại xe trên đồ thị (chuyển qua thành List rồi sau đó Count để đếm trong List có bao nhiêu thằng )
+
+                        for (int k = 0; k< vehicleFee.Count; k++)
                         {
-                            if (lineSeries[j].Title == receipts[k].Vehicle.VehicleType.VehicleTypeName)
+                            if (lineSeries[j].Title == vehicleFee[k].VehicleType.VehicleTypeName)
                             {
-                                income += receipts[k].ParkingFee;
+                                income += vehicleFee[k].VehicleType.ParkingFee;
                             }
-                            lineSeries[j].Values.Add(income);
-                            total += income;
                         }
+                        total += income;
+
                     }
                 }
             }
@@ -118,5 +124,6 @@ namespace QLBaiDoXe
             SeriesCollection.Clear();
             SeriesCollection.AddRange(lineSeries);
         }
+
     }
 }

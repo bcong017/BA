@@ -4,10 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QLBaiDoXe"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             
-        xmlns:hc="https://handyorg.github.io/handycontrol" x:Class="QLBaiDoXe.TraCuuXe"
-             
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
+        x:Class="QLBaiDoXe.TraCuuXe"    
         mc:Ignorable="d"
          Background="{DynamicResource MaterialDesignPaper}"    
         Height="720" Width="1039" >
@@ -86,22 +84,53 @@
 
         </Grid>
         <Grid Margin="10,236,16.4,31.332">
-            <Rectangle Fill="White" HorizontalAlignment="Left" Height="452.668" Margin="1.5,-9,-1.5,0" VerticalAlignment="Top" Width="1012.6" RadiusX="20" RadiusY="20"/>
-            <ListView x:Name="lvResult" HorizontalAlignment="Left" Height="427.6" Margin="10,0,0,0" VerticalAlignment="Top" Width="992.6">
+            <Rectangle Fill="White" RadiusX="20" RadiusY="20"/>
+            <ListView x:Name="lvResult" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Visible" >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Biển số" DisplayMemberBinding="{Binding VehicleID}"/>
-                        <GridViewColumn Header="Số thẻ" DisplayMemberBinding="{Binding ParkingCardID}"/>
-                        <GridViewColumn Header="Ngày vào bãi"  DisplayMemberBinding="{Binding TimeStartedParking}"/>
+                        <GridViewColumn Header="STT">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding STT}" HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Mã xe">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding VehicleID}" HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Số thẻ">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ParkingCardID}" HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Thời điểm vào bãi">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TimeStartedParking, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
 
         </Grid>
         <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Height="80" Margin="35,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="485" FontSize="42" Text="Tra cứu xe"/>
-        <Image Margin="940.52,2.8,3.813,620.4" Source="Image4.png" Stretch="Fill"/>
+        <Image Margin="940.52,2.8,3.813,620.4" Source="Resources/Image4.png" Stretch="Fill"/>
         <TextBlock Text="CÔNG TY THNM BÃI ĐỖ XE THÔNG MINH KYPS" HorizontalAlignment="Left" Height="18.8" Margin="661.853,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="273.667" FontWeight="Bold" FontFamily="Segoe UI"/>
-        <TextBlock HorizontalAlignment="Left" Height="31.05" Margin="663.353,43.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268.667" TextAlignment="Right" FontSize="10"><Run Text="Điện thoại: (094).8423.014"/><LineBreak/><Run Text="Email: 20521868@gm.uit.edu.vn"/><LineBreak/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="31.05" Margin="663.353,43.8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268.667" TextAlignment="Right" FontSize="10"><Run Text="Điện thoại: (094).8423.014"/><LineBreak/><Run Text="Email: 20520417@gm.uit.edu.vn"/><LineBreak/></TextBlock>
 
     </Grid>
 </UserControl>

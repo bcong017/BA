@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using QLBaiDoXe.ViewModel;
 using QLBaiDoXe.Classes;
@@ -215,7 +206,7 @@ namespace QLBaiDoXe
                 {
                     Dispatcher.BeginInvoke
                             (
-                            new Action(() => MessageBox.Show("Thẻ không tồn tại"))
+                            new Action(() => MessageBox.Show("Thẻ không tồn tại", "Lỗi!"))
                             );
                     textBox1.Clear();
                 }
@@ -233,7 +224,7 @@ namespace QLBaiDoXe
                 {
                     Dispatcher.BeginInvoke
                         (
-                        new Action(() => MessageBox.Show("Thẻ chưa được sử dụng", "Lưu ý", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification)),
+                        new Action(() => MessageBox.Show("Thẻ chưa được sử dụng", "Lỗi!", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification)),
                         DispatcherPriority.ApplicationIdle
                         );
                     textBox2.Clear();

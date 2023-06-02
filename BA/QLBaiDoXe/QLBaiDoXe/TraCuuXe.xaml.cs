@@ -4,17 +4,11 @@ using QLBaiDoXe.ParkingLotModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static QLBaiDoXe.DBClasses.ParkingVehicle;
+using static System.Net.Mime.MediaTypeNames;
+
 
 namespace QLBaiDoXe
 {
@@ -23,9 +17,28 @@ namespace QLBaiDoXe
     /// </summary>
     public partial class TraCuuXe : UserControl
     {
+        public DateTime LastDayThatHaveCar;
         public TraCuuXe()
         {
             InitializeComponent();
+            if ( DataProvider.Ins.DB.Vehicles.Where(x => x.VehicleState == 1).Count() == 0 && DataProvider.Ins.DB.Vehicles.Where(x => x.VehicleState == 0).Count() == 0)
+            {
+                var msg = "Chưa có xe trong cơ sở dữ liệu";
+                Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(msg,"Lỗi")));
+            }
+            else
+            {
+                int pos = ParkingVehicle.GetLastDayThatHaveCar().IndexOf(' ');
+                LastDayThatHaveCar = new DateTime();
+                LastDayThatHaveCar = DateTime.Parse(ParkingVehicle.GetLastDayThatHaveCar().Substring(0, pos));
+                cbxDay.Text = LastDayThatHaveCar.Day.ToString();
+                cbxMonth.Text = LastDayThatHaveCar.Month.ToString();
+                cbxYear.Text = LastDayThatHaveCar.Year.ToString();
+                List<TempParkingVehicle> result = new List<TempParkingVehicle>();
+
+                result = ParkingVehicle.SearchVehicle_TimeIn_DateOnly(LastDayThatHaveCar);
+                lvResult.ItemsSource = result;
+            }
         }
         private void Nullify()
         {
@@ -54,7 +67,7 @@ namespace QLBaiDoXe
                 {
                     if (testDay > 29)
                     {
-                        MessageBox.Show("Bạn đã nhập ngày không phù hợp");
+                        MessageBox.Show("Bạn đã nhập ngày không phù hợp","Lỗi!");
                         Nullify();
                         return false;
                     }
@@ -63,7 +76,7 @@ namespace QLBaiDoXe
                 {
                     if (testDay > 28)
                     {
-                        MessageBox.Show("Bạn đã nhập ngày không phù hợp");
+                        MessageBox.Show("Bạn đã nhập ngày không phù hợp", "Lỗi!");
                         Nullify();
                         return false;
                     }
@@ -72,7 +85,7 @@ namespace QLBaiDoXe
             if (testMonth == 4 || testMonth == 6 || testMonth == 9 || testMonth == 11)
                 if (testDay > 30)
                 {
-                    MessageBox.Show("Bạn đã nhập ngày không phù hợp");
+                    MessageBox.Show("Bạn đã nhập ngày không phù hợp", "Lỗi!");
                     Nullify();
                     return false;
                 }
@@ -81,7 +94,7 @@ namespace QLBaiDoXe
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             
-            List<Vehicle> result = new List<Vehicle>();
+            List<TempParkingVehicle> result = new List<TempParkingVehicle>();
             string hour = string.Empty;
             if (TimePicker.Text != null)
             {
@@ -102,7 +115,7 @@ namespace QLBaiDoXe
               
             if (result.Count == 0)
             {
-                MessageBox.Show("Trong khoảng thời gian bạn đã nhập không có xe trong bãi!");
+                MessageBox.Show("Trong khoảng thời gian bạn đã nhập không có xe trong bãi!","Lỗi!");
             }
             lvResult.ItemsSource = null;
             lvResult.ItemsSource = result;
