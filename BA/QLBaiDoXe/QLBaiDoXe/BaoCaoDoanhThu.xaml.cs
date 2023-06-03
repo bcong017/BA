@@ -29,8 +29,8 @@ namespace QLBaiDoXe
             UpdateReport(DateTime.Now.Year);
 
             YearTextbox.Text = DateTime.Now.Year.ToString();
-            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-            YFormatter = value => value + "";
+            Labels = new[] { "Thg 1", "Thg 2", "Thg 3", "Thg 4", "Thg 5", "Thg 6", "Thg 7", "Thg 8", "Thg 9", "Thg 10", "Thg 11", "Thg 12" };
+            YFormatter = value => value.ToString("N0");
 
             //modifying the series collection will animate and update the chart
             /*SeriesCollection.Add(new LineSeries
