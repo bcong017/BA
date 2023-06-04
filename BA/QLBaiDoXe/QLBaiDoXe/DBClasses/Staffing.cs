@@ -33,7 +33,7 @@ namespace QLBaiDoXe.DBClasses
             }
             else
             {
-                if (DataProvider.Ins.DB.Accounts.Any(x => x.AccountName == name))
+                if (DataProvider.Ins.DB.Accounts.Any(x => x.AccountName == accname))
                 {
                     MessageBox.Show("Tồn tại tài khoản có cùng tên đăng nhập mà bạn đã nhập!","Lỗi!");
                     return;
@@ -80,7 +80,7 @@ namespace QLBaiDoXe.DBClasses
             }
             else
             {
-                if (DataProvider.Ins.DB.Accounts.Any(x => x.AccountName == name))
+                if (DataProvider.Ins.DB.Accounts.Any(x => x.AccountName == accname))
                 {
                     MessageBox.Show("Tồn tại tài khoản có cùng tên đăng nhập mà bạn đã nhập!", "Lỗi!");
                     return;
@@ -387,111 +387,71 @@ namespace QLBaiDoXe.DBClasses
             return list;
         }
 
-        public static List<TempTimekeep> GetTimekeepForMonth(int month)
+        public static List<TempTimekeep> GetTimekeepForMonth(DateTime month)
         {
-            var list = new List<TempTimekeep>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Timekeeps.Where(x => x.LoginTime.Month == month).ToList())
-            {
-                counter++;
-                var temp = new TempTimekeep(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
+            return DataProvider.Ins.DB.Timekeeps
+                .Where(x => x.LoginTime.Year == month.Year && x.LoginTime.Month == month.Month && x.LoginTime.Day == month.Day)
+                .ToList()
+                .Select((item, index) => new TempTimekeep(item, index + 1))
+                .ToList();
         }
+
         public static List<TempTimekeep> GetTimekeepForDate(DateTime sdate, DateTime edate)
         {
-            var list = new List<TempTimekeep>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Timekeeps.Where(x => x.LoginTime >= sdate && x.LogoutTime <= edate).ToList())
-            {
-                counter++;
-                var temp = new TempTimekeep(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
+            return DataProvider.Ins.DB.Timekeeps
+                .Where(x => x.LoginTime >= sdate && x.LogoutTime <= edate)
+                .ToList()
+                .Select((item, index) => new TempTimekeep(item, index + 1))
+                .ToList();
         }
         public static List<TempTimekeep> GetTimekeepForStartDate( DateTime sdate)
         {
-            var list = new List<TempTimekeep>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Timekeeps.Where(x => x.LoginTime >= sdate).ToList())
-            {
-                counter++;
-                var temp = new TempTimekeep(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
+            return DataProvider.Ins.DB.Timekeeps
+                .Where(x => x.LoginTime >= sdate)
+                .ToList()
+                .Select((item, index) => new TempTimekeep(item, index + 1))
+                .ToList();
         }
         public static List<TempTimekeep> GetTimekeepForStartDateAndName(string name, DateTime sdate)
         {
-            var list = new List<TempTimekeep>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Timekeeps.Where(x => x.Staff.StaffName.Contains(name) && x.LoginTime >= sdate).ToList())
-            {
-                counter++;
-                var temp = new TempTimekeep(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
+            return DataProvider.Ins.DB.Timekeeps
+                .Where(x => x.Staff.StaffName.Contains(name) && x.LoginTime >= sdate)
+                .ToList()
+                .Select((item, index) => new TempTimekeep(item, index + 1))
+                .ToList();
         }
         public static List<TempTimekeep> GetTimekeepForEndDate(DateTime edate)
         {
-            var list = new List<TempTimekeep>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Timekeeps.Where(x => x.LogoutTime <= edate).ToList())
-            {
-                counter++;
-                var temp = new TempTimekeep(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
+            return DataProvider.Ins.DB.Timekeeps
+                .Where(x => x.LogoutTime <= edate)
+                .ToList()
+                .Select((item, index) => new TempTimekeep(item, index + 1))
+                .ToList();
         }
         public static List<TempTimekeep> GetTimekeepForEndDateAndName(string name, DateTime edate)
         {
-            var list = new List<TempTimekeep>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Timekeeps.Where(x => x.Staff.StaffName.Contains(name) && x.LogoutTime <= edate).ToList())
-            {
-                counter++;
-                var temp = new TempTimekeep(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
+            return DataProvider.Ins.DB.Timekeeps
+                .Where(x => x.Staff.StaffName.Contains(name) && x.LogoutTime <= edate)
+                .ToList()
+                .Select((item, index) => new TempTimekeep(item, index + 1))
+                .ToList();
         }
         public static List<TempTimekeep> GetTimekeepForStaff(string name)
         {
-            var list = new List<TempTimekeep>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Timekeeps.Where(x => x.Staff.StaffName.Contains(name)).ToList())
-            {
-                counter++;
-                var temp = new TempTimekeep(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
+           return DataProvider.Ins.DB.Timekeeps
+                .Where(x => x.Staff.StaffName.Contains(name))
+                .ToList()
+                .Select((item, index) => new TempTimekeep(item, index + 1))
+                .ToList();
         }
 
         public static List<TempTimekeep> GetSpecificTimekeeps(string name, DateTime startDate, DateTime endDate)
         {
-            var list = new List<TempTimekeep>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Timekeeps.Where(x => x.Staff.StaffName.Contains(name)
-                                                    && x.LoginTime >= startDate && x.LogoutTime <= endDate).ToList())
-            {
-                counter++;
-                var temp = new TempTimekeep(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
+            return DataProvider.Ins.DB.Timekeeps
+                .Where(x => x.Staff.StaffName.Contains(name) && x.LoginTime >= startDate && x.LogoutTime <= endDate)
+                .ToList()
+                .Select((item, index) => new TempTimekeep(item, index + 1))
+                .ToList();
         }
 
         public static string GetAccountNameFromStaff(Staff staff)
@@ -503,6 +463,16 @@ namespace QLBaiDoXe.DBClasses
                 Account account = DataProvider.Ins.DB.Accounts.FirstOrDefault(x => x.StaffID == getStaff.StaffID);
                 return account.AccountName;
             }
+        }
+
+        public static DateTime? GetFirstLogin()
+        {
+            return DataProvider.Ins.DB.Timekeeps.OrderBy(item => item.LoginTime).FirstOrDefault()?.LoginTime;
+        }
+
+        public static DateTime? GetLastLogin()
+        {
+            return DataProvider.Ins.DB.Timekeeps.OrderByDescending(item => item.LoginTime).FirstOrDefault()?.LogoutTime;
         }
     }
 }

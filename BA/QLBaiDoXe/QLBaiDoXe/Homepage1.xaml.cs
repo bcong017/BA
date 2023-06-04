@@ -280,12 +280,6 @@ namespace QLBaiDoXe
                     Dispatcher.BeginInvoke(new Action(() => vehiclePlate_Copy.Text = "Xe máy"));
                 }
             }
-            if (e.Key == Key.F2 && MainWindow.currentUser.RoleID == 2)
-            {
-                admin add = new admin();
-                add.Show();
-                this.Close();
-            }
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

@@ -108,21 +108,26 @@ namespace QLBaiDoXe.DBClasses
 
         public static List<TempParkingVehicle> SearchVehicle_TimeIn_DateAndHour(DateTime timeIn)
         {
-            var list = new List<TempParkingVehicle>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Vehicles.Where(x => x.TimeStartedParking.Day == timeIn.Day && x.TimeStartedParking.Month == timeIn.Month && x.TimeStartedParking.Year == timeIn.Year
-                                                        && x.TimeStartedParking.Hour == timeIn.Hour).ToList())
-            {
-                counter++;
-                var temp = new TempParkingVehicle(item, counter);
-                list.Add(temp);
-            }
-            return list;
+            return DataProvider.Ins.DB.Vehicles
+                .Where(x =>
+                    x.TimeStartedParking.Day == timeIn.Day
+                    && x.TimeStartedParking.Month == timeIn.Month
+                    && x.TimeStartedParking.Year == timeIn.Year
+                    && x.TimeStartedParking.Hour == timeIn.Hour)
+                .ToList()
+                .Select((item, index) => new TempParkingVehicle(item, index + 1)).ToList();
         }
 
         public static List<TempParkingVehicle> SearchVehicle_TimeIn_DateOnly(DateTime timeIn)
         {
-            var list = new List<TempParkingVehicle>();
+            return DataProvider.Ins.DB.Vehicles
+                .Where(x => 
+                    x.TimeStartedParking.Day == timeIn.Day 
+                    && x.TimeStartedParking.Month == timeIn.Month 
+                    && x.TimeStartedParking.Year == timeIn.Year)
+                .ToList()
+                .Select((item, index) => new TempParkingVehicle(item, index + 1)).ToList();
+            /*var list = new List<TempParkingVehicle>();
             int counter = 0;
             foreach (var item in DataProvider.Ins.DB.Vehicles.Where(x => x.TimeStartedParking.Day == timeIn.Day && x.TimeStartedParking.Month == timeIn.Month
                                                         && x.TimeStartedParking.Year == timeIn.Year).ToList())
@@ -131,12 +136,12 @@ namespace QLBaiDoXe.DBClasses
                 var temp = new TempParkingVehicle(item, counter);
                 list.Add(temp);
             }
-            return list;
+            return list;*/
         }
 
-        public static string GetLastDayThatHaveCar()
+        public static DateTime GetLastDayThatHaveCar()
         {
-            return DataProvider.Ins.DB.Vehicles.OrderByDescending(x => x.TimeStartedParking).Select(x =>x.TimeStartedParking).First().ToString();
+            return DataProvider.Ins.DB.Vehicles.OrderByDescending(x => x.TimeStartedParking).Select(x => x.TimeStartedParking).First();
         }
         
         public static int GetParkedVehicleNumber()

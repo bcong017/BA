@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Globalization;
 using QLBaiDoXe.DBClasses;
+using System.Text.RegularExpressions;
 
 namespace QLBaiDoXe
 {
@@ -50,6 +51,13 @@ namespace QLBaiDoXe
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
+
+        private void NumbericPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = _regex.IsMatch(e.Text);
         }
     }
 }

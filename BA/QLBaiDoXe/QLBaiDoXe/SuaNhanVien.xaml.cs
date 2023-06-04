@@ -2,8 +2,9 @@
 using QLBaiDoXe.ParkingLotModel;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
-
+using System.Windows.Input;
 
 namespace QLBaiDoXe
 {
@@ -26,9 +27,7 @@ namespace QLBaiDoXe
             { 
                 civilID = value; 
                 staff = new Staff();
-                List<Staff> list = new List<Staff>(); 
-                
-                list =  Staffing.FindStaffByCivilID(civilID); 
+                List<Staff> list = Staffing.FindStaffByCivilID(civilID); 
                 staff = list[0];
             }
         }
@@ -82,6 +81,13 @@ namespace QLBaiDoXe
                 Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text), txbAccName.Text, txbPassword.Text);
             else
                 Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "staff", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text), txbAccName.Text, txbPassword.Text);
+        }
+
+        private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
+
+        private void NumbericPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = _regex.IsMatch(e.Text);
         }
     }
 }

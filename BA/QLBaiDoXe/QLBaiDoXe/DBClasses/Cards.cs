@@ -54,15 +54,10 @@ namespace QLBaiDoXe.DBClasses
 
         public static List<TempParkingCard> GetAllParkingCards()
         {
-            var list = new List<TempParkingCard>();
-            int counter = 0;
-            foreach(var item in DataProvider.Ins.DB.ParkingCards.ToList())
-            {
-                counter++;
-                var temp = new TempParkingCard(item,counter);
-                list.Add(temp);
-            }
-            return list;
+            return DataProvider.Ins.DB.ParkingCards
+                .ToList()
+                .Select((item, index) => new TempParkingCard(item, index + 1))
+                .ToList();
         }
 
         /// <summary>
