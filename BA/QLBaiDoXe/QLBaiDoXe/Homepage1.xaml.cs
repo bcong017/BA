@@ -189,7 +189,7 @@ namespace QLBaiDoXe
                             vehiclePlate_Copy2.Text = "------";
                             priceTag_Copy.Text = "------" + " đồng";
 
-                            string path = @"C:\Users\Admin\Pictures\DA" + DateTime.Now.ToString().Replace(':', '_').Replace('/', '_') + ".jpg";
+                            string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + DateTime.Now.ToString().Replace(':', '_').Replace('/', '_') + ".jpg";
                             DBClasses.ParkingVehicle.VehicleIn(vehiclePlate_Copy.Text.ToString().Trim(), long.Parse(ID), path);
                             temp1.Save(path);
 

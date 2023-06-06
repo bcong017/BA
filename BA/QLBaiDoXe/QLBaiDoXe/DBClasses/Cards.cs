@@ -77,15 +77,28 @@ namespace QLBaiDoXe.DBClasses
                 return 2;
         }
 
-        public static List<ParkingCard> GetCardsFromId(long cardId)
+        public static List<TempParkingCard> GetCardsFromId(long cardId, int state)
         {
-            return DataProvider.Ins.DB.ParkingCards.Where(x => x.ParkingCardID.ToString().Contains(cardId.ToString())).ToList();
+            return DataProvider.Ins.DB.ParkingCards.Where(x => x.ParkingCardID.ToString().Contains(cardId.ToString()) && x.CardState == state)
+                .ToList()
+                .Select((item, index) => new TempParkingCard(item, index + 1))
+                .ToList();
         }
 
-        public static List<ParkingCard> GetCards(long cardId, int state)
+        public static List<TempParkingCard> GetCardsFromIdNoState(long cardId)
         {
-            return DataProvider.Ins.DB.ParkingCards.Where(x => x.ParkingCardID.ToString().Contains(cardId.ToString())
-                                                       && x.CardState == state).ToList();
+            return DataProvider.Ins.DB.ParkingCards.Where(x => x.ParkingCardID.ToString().Contains(cardId.ToString()))
+                .ToList()
+                .Select((item, index) => new TempParkingCard(item, index + 1))
+                .ToList();
+        }
+
+        public static List<TempParkingCard> GetCardsByState( int state)
+        {
+            return DataProvider.Ins.DB.ParkingCards.Where(x => x.CardState == state)
+                .ToList()
+                .Select((item, index) => new TempParkingCard(item, index + 1))
+                .ToList();
         }
     }
 }
