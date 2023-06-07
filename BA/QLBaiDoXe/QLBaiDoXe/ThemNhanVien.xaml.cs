@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Globalization;
 using QLBaiDoXe.DBClasses;
 using System.Text.RegularExpressions;
 
@@ -29,21 +19,20 @@ namespace QLBaiDoXe
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            string mintime = "1/1/1800";
             if (cbxRole.Text == "Quản trị viên")
             {
                 if (string.IsNullOrEmpty(DatePicker.Text))
-                    Staffing.AddAdminInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(mintime), txbAccName.Text, txbPassword.Text);
+                    Staffing.AddAdminInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, null, txbAccName.Text, txbCivilID.Text);
                 else
-                    Staffing.AddAdminInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(DatePicker.Text), txbAccName.Text, txbPassword.Text);
+                    Staffing.AddAdminInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(DatePicker.Text), txbAccName.Text, txbCivilID.Text);
                 
             }
             else
             {
                 if (string.IsNullOrEmpty(DatePicker.Text))
-                    Staffing.AddStaffInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(mintime), txbAccName.Text, txbPassword.Text);
+                    Staffing.AddStaffInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, null, txbAccName.Text, txbCivilID.Text);
                 else
-                    Staffing.AddStaffInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(DatePicker.Text), txbAccName.Text, txbPassword.Text);
+                    Staffing.AddStaffInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(DatePicker.Text), txbAccName.Text, txbCivilID.Text);
                 
             }
         }

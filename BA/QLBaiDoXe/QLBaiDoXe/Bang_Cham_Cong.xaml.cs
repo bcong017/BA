@@ -15,7 +15,6 @@ namespace QLBaiDoXe
         public Bang_Cham_Cong()
         {
             InitializeComponent();
-            this.DataContext = new BangChamCongViewModel();
             StartDateDP.Text = EndDateDP.Text = DateTime.Now.Date.ToString();
             StartDateDP.DisplayDateStart = Staffing.GetFirstLogin();
             StartDateDP.DisplayDateEnd = Staffing.GetLastLogin();

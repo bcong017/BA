@@ -26,9 +26,7 @@ namespace QLBaiDoXe
             set 
             { 
                 civilID = value; 
-                staff = new Staff();
-                List<Staff> list = Staffing.FindStaffByCivilID(civilID); 
-                staff = list[0];
+                staff = Staffing.GetStaffByCivilID(civilID); 
             }
         }
 
@@ -42,10 +40,6 @@ namespace QLBaiDoXe
             txbPhoneNumb.Text = staff.PhoneNumber;
         }
 
-        private void txbAccName_Loaded(object sender, RoutedEventArgs e)
-        {
-            txbAccName.Text = Staffing.GetAccountNameFromStaff(staff);
-        }
 
         private void txbCivilID_Loaded(object sender, RoutedEventArgs e)
         {
@@ -78,9 +72,9 @@ namespace QLBaiDoXe
         private void btnAdjust_Click(object sender, RoutedEventArgs e)
         {
             if (cbxRole.Text == "Quản trị viên")
-                Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text), txbAccName.Text, txbPassword.Text);
+                Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
             else
-                Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "staff", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text), txbAccName.Text, txbPassword.Text);
+                Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "staff", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
         }
 
         private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text

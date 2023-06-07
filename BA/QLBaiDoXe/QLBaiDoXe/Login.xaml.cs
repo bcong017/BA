@@ -35,8 +35,13 @@ namespace QLBaiDoXe
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             currentUser = Staffing.LogIn(UsernameTextbox.Text, PasswordTextbox.Password);
-            if (currentUser != null)
+            if (currentUser != null )
             {
+                if (currentUser.Staff.IsDeleted == true)
+                {
+                    MessageBox.Show("Tài khoản của bạn đã bị vô hiệu hóa!", "Thông báo!");
+                    return;
+                }
                 MessageBox.Show("Đăng nhập thành công", "Thông báo!");
                 if (currentUser.RoleID == 2)
                 {
@@ -58,6 +63,7 @@ namespace QLBaiDoXe
             }
             else
             {
+                
                 MessageBox.Show("Sai thông tin đăng nhập", "Thông báo!");
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.Converters;
 using MaterialDesignThemes.Wpf;
 using QLBaiDoXe.DBClasses;
 using QLBaiDoXe.ParkingLotModel;
@@ -63,82 +64,17 @@ namespace QLBaiDoXe
 
         private void CardSearchTxb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(CardSearchTxb.Text) == true)
+            long? id = null;
+            if (!string.IsNullOrEmpty(CardSearchTxb.Text) && long.TryParse(CardSearchTxb.Text, out long cardid))
             {
-                if (StateCbx.SelectedIndex == 2)
-                {
-                    ListThe.ItemsSource = Cards.GetAllParkingCards();
-                }
-                else if(StateCbx.SelectedIndex == 0)
-                {
-                    ListThe.ItemsSource = Cards.GetCardsByState(0);
-                }
-                else if (StateCbx.SelectedIndex == 1)
-                {
-                    ListThe.ItemsSource = Cards.GetCardsByState(1);
-                }
+                id = cardid;
             }
-            else 
-            if (long.TryParse(CardSearchTxb.Text, out long cardId))
-            {
-                if (StateCbx.SelectedIndex == 1)
-                {
-                    ListThe.ItemsSource = Cards.GetCardsFromId(cardId, 1);
-                }
-                else
-                if (StateCbx.SelectedIndex == 0)
-                {
-                    ListThe.ItemsSource = Cards.GetCardsFromId(cardId, 0);
-                }
-                else
-                {
-                    ListThe.ItemsSource = Cards.GetCardsFromIdNoState(cardId);
-                }
-            }
-            
+            ListThe.ItemsSource = Cards.FindCards(id, StateCbx.SelectedIndex);
         }
 
         private void StateCbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (StateCbx.SelectedIndex == 2)
-            {
-                CardSearchTxb.IsEnabled = false;
-                ListThe.ItemsSource = Cards.GetAllParkingCards();
-            }
-            else
-            {
-                CardSearchTxb.IsEnabled = true;
-                
-                if (string.IsNullOrEmpty(CardSearchTxb.Text) == true)
-                {
-                    if (StateCbx.SelectedIndex == 0)
-                    {
-                        ListThe.ItemsSource = Cards.GetCardsByState(0);
-
-                    } else
-                        if (StateCbx.SelectedIndex == 1)
-                       {
-                        ListThe.ItemsSource = Cards.GetCardsByState(1);
-                       }
-                }
-                else
-                {
-                    if (long.TryParse(CardSearchTxb.Text, out long cardId))
-                    {
-                        if (StateCbx.SelectedIndex == 0)
-                        {
-                            ListThe.ItemsSource = Cards.GetCardsByState(0);
-
-                        }
-                        else
-                       if (StateCbx.SelectedIndex == 1)
-                        {
-                            ListThe.ItemsSource = Cards.GetCardsByState(1);
-                        }
-                    }
-
-                }
-            }
+            CardSearchTxb_TextChanged(null,null);
         }
-    }
+    } 
 }

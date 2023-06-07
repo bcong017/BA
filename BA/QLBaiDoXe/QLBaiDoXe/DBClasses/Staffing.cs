@@ -1,4 +1,6 @@
-﻿using QLBaiDoXe.ParkingLotModel;
+﻿using ControlzEx.Standard;
+using MaterialDesignThemes.Wpf;
+using QLBaiDoXe.ParkingLotModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +9,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation.Peers;
+using System.Windows.Controls;
 using System.Xml.Linq;
+using static QLBaiDoXe.DBClasses.Cards;
 
 namespace QLBaiDoXe.DBClasses
 {
@@ -24,7 +28,7 @@ namespace QLBaiDoXe.DBClasses
             return sBuilder.ToString();
         }
 
-        public static void AddStaffInfo(string name, string civilId, string phoneNumber, string address, DateTime dob, string accname, string password)
+        public static void AddStaffInfo(string name, string civilId, string phoneNumber, string address, DateTime? dob, string accname, string password)
         {
             if (DataProvider.Ins.DB.Staffs.Any(x => x.CivilID == civilId))
             {
@@ -47,8 +51,9 @@ namespace QLBaiDoXe.DBClasses
                 RoleID = role.RoleID,
                 PhoneNumber = phoneNumber,
                 StaffAddress = address,
-                DateOfBirth = dob.Date,
+                DateOfBirth = dob?.Date,
                 Role = role
+
             };
             DataProvider.Ins.DB.Staffs.Add(newStaff);
             role.Staffs.Add(newStaff);
@@ -71,7 +76,7 @@ namespace QLBaiDoXe.DBClasses
             MessageBox.Show("Thêm nhân viên thành công!", "Thông báo!");
         }
 
-        public static void AddAdminInfo(string name, string civilId, string phoneNumber, string address, DateTime dob, string accname, string password)
+        public static void AddAdminInfo(string name, string civilId, string phoneNumber, string address, DateTime? dob, string accname, string password)
         {
             if (DataProvider.Ins.DB.Staffs.Any(x => x.CivilID == civilId))
             {
@@ -94,7 +99,7 @@ namespace QLBaiDoXe.DBClasses
                 RoleID = role.RoleID,
                 PhoneNumber = phoneNumber,
                 StaffAddress = address,
-                DateOfBirth = dob.Date,
+                DateOfBirth = dob?.Date,
                 Role = role
             };
             DataProvider.Ins.DB.Staffs.Add(newStaff);
@@ -118,7 +123,7 @@ namespace QLBaiDoXe.DBClasses
             MessageBox.Show("Thêm quản trị viên thành công!", "Thông báo!");
         }
 
-        public static void ChangeStaffInfo(int staffId, string staffNewName, string civilId, string role, string phoneNumber, string address, DateTime dob, string accname, string password)
+        public static void ChangeStaffInfo(int staffId, string staffNewName, string civilId, string role, string phoneNumber, string address, DateTime dob)
         {
             Staff checkStaff = DataProvider.Ins.DB.Staffs.FirstOrDefault(x => x.CivilID == civilId);
             if (checkStaff != null)
@@ -138,13 +143,6 @@ namespace QLBaiDoXe.DBClasses
                 staff.Role = DataProvider.Ins.DB.Roles.FirstOrDefault(x => x.RoleName == role);
                 staff.PhoneNumber = phoneNumber;
                 staff.DateOfBirth = dob.Date;
-
-                Account account = DataProvider.Ins.DB.Accounts.FirstOrDefault(x => x.StaffID == staffId);
-                account.AccountName = accname;
-                SHA256 sha256hash = SHA256.Create();
-                string passwordhash = GetHash(sha256hash, password);
-                account.AccountPassword = passwordhash;
-
                 DataProvider.Ins.DB.SaveChanges();
                 MessageBox.Show("Sửa thông tin nhân viên thành công", "Thông báo!");
                 return;
@@ -155,29 +153,24 @@ namespace QLBaiDoXe.DBClasses
                 return;
             }
         }
-        public static bool DeleteStaff(int staffId)
+        public static bool RestoreStaff(int staffId)
         {
             if (DataProvider.Ins.DB.Staffs.Any(x => x.StaffID == staffId))
             {
-                Account account = DataProvider.Ins.DB.Accounts.FirstOrDefault(x => x.Staff.StaffID == staffId);
-                DataProvider.Ins.DB.Accounts.Remove(account);
                 Staff staff = DataProvider.Ins.DB.Staffs.FirstOrDefault(x => x.StaffID == staffId);
-                DataProvider.Ins.DB.Staffs.Remove(staff);
+                staff.IsDeleted = false;
                 DataProvider.Ins.DB.SaveChanges();
                 return true;
             }
             else
                 return false;
         }
-
-        public static bool DeleteAccount(string username)
+        public static bool DeleteStaff(int staffId)
         {
-            if (DataProvider.Ins.DB.Accounts.Any(x => x.AccountName == username))
+            if (DataProvider.Ins.DB.Staffs.Any(x => x.StaffID == staffId))
             {
-                Account unwantedAccount = DataProvider.Ins.DB.Accounts.Where(x => x.AccountName == username).FirstOrDefault();
-                Role role = DataProvider.Ins.DB.Roles.FirstOrDefault(x => x.RoleID == unwantedAccount.RoleID);
-                role.Accounts.Remove(unwantedAccount);
-                DataProvider.Ins.DB.Accounts.Remove(unwantedAccount);
+                Staff staff = DataProvider.Ins.DB.Staffs.FirstOrDefault(x => x.StaffID == staffId);
+                staff.IsDeleted = true;
                 DataProvider.Ins.DB.SaveChanges();
                 return true;
             }
@@ -254,14 +247,59 @@ namespace QLBaiDoXe.DBClasses
                 this.PhoneNumber = a.PhoneNumber;
                 this.StaffAddress = a.StaffAddress;
                 this.DateOfBirth = a.DateOfBirth;
+                
+                this.IsDeleted = a.IsDeleted;
             }
         }
+        public static List<TempStaff> FindStaff(string option, bool ?state, string text)
+        {
+            switch (option)
+            {
+                case "Tên":
+                    return DataProvider.Ins.DB.Staffs.Where(item =>
+                        (item.StaffName.ToString().Contains(text))
+                        && (state == null ? true : item.IsDeleted == state))
+                        .ToList()
+                        .Select((item, index) => new TempStaff(item, index + 1))
+                        .ToList();
+                case "Số điện thoại":
+                    return DataProvider.Ins.DB.Staffs.Where(item =>
+                        (item.PhoneNumber.ToString().Contains(text))
+                        && (state == null ? true : item.IsDeleted == state))
+                        .ToList()
+                        .Select((item, index) => new TempStaff(item, index + 1))
+                        .ToList();
+                case "Số CCCD":
+                    return DataProvider.Ins.DB.Staffs.Where(item =>
+                        (item.StaffID.ToString().Contains(text))
+                        && (state == null ? true : item.IsDeleted == state))
+                        .ToList()
+                        .Select((item, index) => new TempStaff(item, index + 1))
+                        .ToList();
+                //case "Chức vụ":
+                //    return DataProvider.Ins.DB.Staffs.Where(item =>
+                //        (item.Role.ToString().Contains(text))
+                //        && (state == null ? true : item.IsDeleted == state))
+                //        .ToList()
+                //        .Select((item, index) => new TempStaff(item, index + 1))
+                //        .ToList();
+                case "Địa chỉ":
+                    return DataProvider.Ins.DB.Staffs.Where(item =>
+                        (item.StaffAddress.ToString().Contains(text))
+                        && (state == null ? true : item.IsDeleted == state))
+                        .ToList()
+                        .Select((item, index) => new TempStaff(item, index + 1))
+                        .ToList();
+                default: 
+                    return null;
+            }    
+        }
 
-        public static List<TempStaff> GetAllStaff()
+        public static List<TempStaff> GetAllStaff(bool state)
         {
             var list = new List<TempStaff>();
             int counter = 0;
-            foreach(var item in DataProvider.Ins.DB.Staffs.ToList())
+            foreach(var item in DataProvider.Ins.DB.Staffs.Where(x => x.IsDeleted == state).ToList())
             {
                 counter++;
                 var temp = new TempStaff(item, counter);
@@ -271,23 +309,10 @@ namespace QLBaiDoXe.DBClasses
             return list;
         }
 
-        public static List<TempStaff> FindStaffByName(string name)
-        {
-            var list = new List<TempStaff>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Staffs.Where(x => x.StaffName.Contains(name)).ToList())
-            {
-                counter++;
-                var temp = new TempStaff(item, counter);
-                list.Add(temp);
-            }
 
-            return list;
-        }
-
-        public static List<Staff> FindStaffByCivilID(string CivilID)
+        public static Staff GetStaffByCivilID(string CivilID)
         {
-            return DataProvider.Ins.DB.Staffs.Where(x => x.CivilID.Contains(CivilID)).ToList();
+            return DataProvider.Ins.DB.Staffs.Where(x => x.CivilID == CivilID).FirstOrDefault();
         }
 
             public static List<TempStaff> FindTempStaffByCivilID(string CivilID)
@@ -304,61 +329,9 @@ namespace QLBaiDoXe.DBClasses
             return list;
         }
 
-        public static List<TempStaff> FindStaffByRoleID(string Role)
-        {
-            var list = new List<TempStaff>();
-            int counter = 0;
-            if (Role == "admin")
-            {
-                foreach (var item in DataProvider.Ins.DB.Staffs.Where(x => x.RoleID == 2).ToList())
-                {
-                    counter++;
-                    var temp = new TempStaff(item, counter);
-                    list.Add(temp);
-                }
+        
 
-                return list;
-            }
-            else if (Role == "staff")
-            {
-                foreach (var item in DataProvider.Ins.DB.Staffs.Where(x => x.RoleID == 1).ToList())
-                {
-                    counter++;
-                    var temp = new TempStaff(item, counter);
-                    list.Add(temp);
-                }
-
-                return list;
-            }
-            return null;
-        }
-
-        public static List<TempStaff> FindStaffByPhoneNumber(string PhoneNumber)
-        {
-            var list = new List<TempStaff>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Staffs.Where(x => x.PhoneNumber.Contains(PhoneNumber)).ToList())
-            {
-                counter++;
-                var temp = new TempStaff(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
-        }
-        public static List<TempStaff> FindStaffByStaffAddress(string StaffAddress)
-        {
-            var list = new List<TempStaff>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Staffs.Where(x => x.StaffAddress.Contains(StaffAddress)).ToList())
-            {
-                counter++;
-                var temp = new TempStaff(item, counter);
-                list.Add(temp);
-            }
-
-            return list;
-        }
+        
 
         public class TempTimekeep: Timekeep   // Tạo class tạm để chứa dữ liệu
         {
@@ -454,16 +427,6 @@ namespace QLBaiDoXe.DBClasses
                 .ToList();
         }
 
-        public static string GetAccountNameFromStaff(Staff staff)
-        {
-            Staff getStaff = DataProvider.Ins.DB.Staffs.FirstOrDefault(x => x.StaffID == staff.StaffID);
-            if (getStaff == null) return null;
-            else
-            {
-                Account account = DataProvider.Ins.DB.Accounts.FirstOrDefault(x => x.StaffID == getStaff.StaffID);
-                return account.AccountName;
-            }
-        }
 
         public static DateTime? GetFirstLogin()
         {

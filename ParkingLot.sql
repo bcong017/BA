@@ -46,7 +46,8 @@ CREATE TABLE Staff (
 	RoleID			int not null,
 	PhoneNumber		nvarchar(MAX),
 	StaffAddress	nvarchar(MAX),
-	DateOfBirth		date
+	DateOfBirth		date,
+	IsDeleted		bit default 0, -- 0: false, 1: true -- 
 );
 
 CREATE TABLE Timekeeps (
@@ -63,7 +64,8 @@ ALTER TABLE Timekeeps ADD CONSTRAINT Timekeeps_StaffID_FK FOREIGN KEY (StaffID) 
 ALTER TABLE Accounts ADD CONSTRAINT Accounts_StaffID_FK FOREIGN KEY (StaffID) REFERENCES Staff(StaffID) ON DELETE CASCADE;
 ALTER TABLE Accounts ADD CONSTRAINT Accounts_RoleID_FK FOREIGN KEY (RoleID) REFERENCES Roles(RoleID);
 ALTER TABLE Staff ADD CONSTRAINT Staff_RoleID_FK FOREIGN KEY (RoleID) REFERENCES Roles(RoleID);
-
+ALTER TABLE Staff ADD  IsDeleted bit default 0;
+Update Staff set IsDeleted = 0;
 INSERT INTO Roles VALUES ('staff'), ('admin')
 INSERT INTO VehicleTypes (VehicleTypeName, ParkingFee) VALUES (N'Xe máy', 4000), (N'Xe hơi', 8000), (N'Xe đạp', 1000)
 INSERT INTO Staff (CivilID, StaffName, RoleID, PhoneNumber, StaffAddress, DateOfBirth) VALUES ('CCCD1233466', 'admin', 2, '09123784', '221 Baker St', '1/1/1990')

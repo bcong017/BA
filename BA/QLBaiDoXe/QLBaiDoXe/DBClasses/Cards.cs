@@ -76,21 +76,14 @@ namespace QLBaiDoXe.DBClasses
             else
                 return 2;
         }
-
-        public static List<TempParkingCard> GetCardsFromId(long cardId, int state)
+        public static List<TempParkingCard> FindCards(long? cardId, int state)
         {
-            return DataProvider.Ins.DB.ParkingCards.Where(x => x.ParkingCardID.ToString().Contains(cardId.ToString()) && x.CardState == state)
+            return DataProvider.Ins.DB.ParkingCards.Where(item =>
+                (cardId == null ? true : item.ParkingCardID.ToString().StartsWith(cardId.ToString()))
+                && (state == 2 ? true : item.CardState == state))
                 .ToList()
                 .Select((item, index) => new TempParkingCard(item, index + 1))
-                .ToList();
-        }
-
-        public static List<TempParkingCard> GetCardsFromIdNoState(long cardId)
-        {
-            return DataProvider.Ins.DB.ParkingCards.Where(x => x.ParkingCardID.ToString().Contains(cardId.ToString()))
-                .ToList()
-                .Select((item, index) => new TempParkingCard(item, index + 1))
-                .ToList();
+                .ToList(); ;
         }
 
         public static List<TempParkingCard> GetCardsByState( int state)

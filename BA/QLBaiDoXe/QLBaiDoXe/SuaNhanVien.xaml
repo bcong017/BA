@@ -29,16 +29,12 @@
             <TextBox x:Name="txbPhoneNumb" HorizontalAlignment="Left" Height="29.6" TextWrapping="Wrap" VerticalAlignment="Top" Width="173.6" FontSize="16" Margin="0,41.6,0,0" Grid.Row="1" Loaded="txbPhoneNumb_Loaded" PreviewTextInput="NumbericPreviewTextInput"/>
             <TextBox x:Name="txbCivlID" Grid.Column="1" HorizontalAlignment="Left" Height="29.6" TextWrapping="Wrap" VerticalAlignment="Top" Width="173.6" FontSize="16" Margin="0,41.6,0,0" Grid.Row="1" Text="{Binding CCCD, UpdateSourceTrigger=PropertyChanged}" Loaded="txbCivilID_Loaded" PreviewTextInput="NumbericPreviewTextInput"/>
             <TextBox x:Name="txbAddress" Grid.Column="2" HorizontalAlignment="Left" Height="29.6" TextWrapping="Wrap" VerticalAlignment="Top" Width="173.6" FontSize="16" Margin="0,41.6,0,0" Grid.Row="1" Loaded="txbAddress_Loaded"/>
-            <TextBox x:Name="txbAccName" HorizontalAlignment="Left" Height="29.6" TextWrapping="Wrap" VerticalAlignment="Top" Width="173.6" FontSize="16" Margin="0,41.6,0,0" Grid.Row="2" Text="{Binding TaiKhoan, UpdateSourceTrigger=PropertyChanged}" Loaded="txbAccName_Loaded"/>
-            <TextBox x:Name="txbPassword" Grid.Column="1" HorizontalAlignment="Left" Height="29.6" TextWrapping="Wrap" VerticalAlignment="Top" Width="173.6" FontSize="16" Grid.Row="2" Margin="0,41.6,0,0" Text="{Binding MatKhau, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock HorizontalAlignment="Left" Height="33.6" TextWrapping="Wrap" Text="CMND/CCCD" VerticalAlignment="Top" Width="231.333" FontSize="20" Grid.Column="1" Margin="0.001,0,0,0" Grid.Row="1" />
             <TextBlock HorizontalAlignment="Left" Height="33.6" TextWrapping="Wrap" Text="Họ và tên" VerticalAlignment="Top" Width="231.333" FontSize="20"/>
             <TextBlock HorizontalAlignment="Left" Height="33.6" TextWrapping="Wrap" VerticalAlignment="Top" Width="231.333" FontSize="20" Grid.Column="1" Margin="0.001,0,0,0"><Run Text="Ngày sinh"/></TextBlock>
             <TextBlock HorizontalAlignment="Left" Height="33.6" TextWrapping="Wrap" Text="Chức vụ" VerticalAlignment="Top" Width="231.333" FontSize="20" Grid.Column="2"/>
             <TextBlock HorizontalAlignment="Left" Height="33.6" TextWrapping="Wrap" Text="Số điện thoại" VerticalAlignment="Top" Width="231.333" FontSize="20" Grid.Row="1"/>
             <TextBlock HorizontalAlignment="Left" Height="33.6" TextWrapping="Wrap" Text="Địa chỉ" VerticalAlignment="Top" Width="231.333" FontSize="20" Grid.Column="2" Grid.Row="1"/>
-            <TextBlock HorizontalAlignment="Left" Height="33.6" TextWrapping="Wrap" Text="Tên tài khoản" VerticalAlignment="Top" Width="231.333" FontSize="20" Grid.Row="2"/>
-            <TextBlock HorizontalAlignment="Left" Height="33.6" TextWrapping="Wrap" Text="Mật khẩu" VerticalAlignment="Top" Width="231.333" FontSize="20" Grid.Column="1" Margin="0.001,0,0,0" Grid.Row="2"/>
             <ComboBox x:Name="cbxRole" HorizontalAlignment="Left" Height="29.6" Margin="0,41.6,0,0" VerticalAlignment="Top" Width="173.6" Grid.Column="2" Text="{Binding ChucVu, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Loaded="cbxRole_Loaded">
                 <ComboBoxItem Content="Quản trị viên"/>
                 <ComboBoxItem Content="Nhân viên"/>

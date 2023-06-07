@@ -15,6 +15,7 @@ using AForge.Video;
 using AForge.Video.DirectShow;
 using QLBaiDoXe.ParkingLotModel;
 using QLBaiDoXe.DBClasses;
+using System.IO;
 
 namespace QLBaiDoXe
 {
@@ -27,7 +28,6 @@ namespace QLBaiDoXe
         public Homepage1()
         {
             InitializeComponent();
-            this.DataContext = new HomePage1ViewModel();
             GetVideoDevices();
             StartCamera();
             this.Closing += Homepage1_Closing;
@@ -189,7 +189,7 @@ namespace QLBaiDoXe
                             vehiclePlate_Copy2.Text = "------";
                             priceTag_Copy.Text = "------" + " đồng";
 
-                            string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + DateTime.Now.ToString().Replace(':', '_').Replace('/', '_') + ".jpg";
+                            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Pictures", $"DA{DateTime.Now.ToString("dd_MM_yyyy HH_mm_ss tt")}.jpg");
                             DBClasses.ParkingVehicle.VehicleIn(vehiclePlate_Copy.Text.ToString().Trim(), long.Parse(ID), path);
                             temp1.Save(path);
 

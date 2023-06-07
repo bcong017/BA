@@ -41,6 +41,7 @@
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="StaffAddress" Type="nvarchar(max)" />
           <Property Name="DateOfBirth" Type="date" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="Timekeeps">
           <Key>
@@ -227,6 +228,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StaffAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="Accounts" Relationship="Self.Accounts_StaffID_FK" FromRole="Staff" ToRole="Accounts" />
           <NavigationProperty Name="Role" Relationship="Self.Staff_RoleID_FK" FromRole="Staff" ToRole="Roles" />
           <NavigationProperty Name="Timekeeps" Relationship="Self.Timekeeps_StaffID_FK" FromRole="Staff" ToRole="Timekeeps" />
@@ -420,6 +422,7 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="StaffAddress" ColumnName="StaffAddress" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

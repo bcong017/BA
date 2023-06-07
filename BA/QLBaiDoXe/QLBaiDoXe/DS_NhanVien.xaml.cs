@@ -8,9 +8,11 @@ using System.Windows.Data;
 using System;
 using System.Globalization;
 using static QLBaiDoXe.DBClasses.Staffing;
+using System.Web.UI.WebControls;
 
 namespace QLBaiDoXe
 {
+    
     /// <summary>
     /// Interaction logic for DS_NhanVien.xaml
     /// </summary>
@@ -20,45 +22,22 @@ namespace QLBaiDoXe
         public DS_NhanVien()
         {
             InitializeComponent();
-            lvNhanVien.ItemsSource = Staffing.GetAllStaff();
-            this.DataContext = new DSNhanVienViewModel();
+            StateCbx.SelectedIndex = 0;
+            lvNhanVien.ItemsSource = Staffing.GetAllStaff(false);
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ThemNhanVien add = new ThemNhanVien();
             add.ShowDialog();
-            lvNhanVien.ItemsSource = Staffing.GetAllStaff();
+            lvNhanVien.ItemsSource = Staffing.GetAllStaff(false);
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            List<TempStaff> result = new List<TempStaff>();
-            lvNhanVien.ItemsSource = null;
-            switch (cbxItem.Text)
-            {
-                case "Tên":
-                    result = Staffing.FindStaffByName(txbSearch.Text);
-                    break;
-                case "Số điện thoại":
-                    result = Staffing.FindStaffByPhoneNumber(txbSearch.Text);
-                    break;
-                case "Số CCCD":
-                    result = Staffing.FindTempStaffByCivilID(txbSearch.Text);
-                    break;
-                case "Chức vụ":
-                    result = Staffing.FindStaffByRoleID(txbSearch.Text);
-                    break;
-                case "Địa chỉ":
-                    result = Staffing.FindStaffByStaffAddress(txbSearch.Text);
-                    break;
-            }
-            if (result != null)
-            {
-                lvNhanVien.ItemsSource = result;
-            }
+            StateCbx_SelectionChanged(null,null);
         }
         private void cbxItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            txbSearch.IsEnabled = true;
+            StateCbx_SelectionChanged(null, null);
         }
         private void btnFix_Click(object sender, RoutedEventArgs e)
         {
@@ -71,32 +50,92 @@ namespace QLBaiDoXe
             SuaNhanVien snv = new SuaNhanVien();
             snv.CivilID = selectedItem.CivilID;
             snv.ShowDialog();
-        }
-        private void btnUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            lvNhanVien.ItemsSource = Staffing.GetAllStaff();
+            lvNhanVien.ItemsSource = Staffing.GetAllStaff(false);
         }
         private void btnDel_Click(object sender, RoutedEventArgs e)
         {
-            
-            if (lvNhanVien.SelectedItem == null)
-            {
-                MessageBox.Show("Hãy chọn thông tin nhân viên cần xóa!", "Lỗi!");
+            if (lvNhanVien == null)
                 return;
-            }
+            if (lvNhanVien.SelectedItems.Count == 0)
+                return;
             var selectedItem = (dynamic)lvNhanVien.SelectedItems[0];
-            if (MainWindow.currentUser.StaffID == selectedItem.StaffID)
+            if (btnDel.Content.ToString() == "Thôi việc")
             {
-                MessageBox.Show("Không thể xóa nhân viên đang sử dụng ứng dụng!", "Lỗi!");
-                return;
+                if (lvNhanVien.SelectedItem == null)
+                {
+                    MessageBox.Show("Hãy chọn thông tin nhân viên cần thôi việc!", "Lỗi!");
+                    return;
+                }
+                
+                if (MainWindow.currentUser.StaffID == selectedItem.StaffID)
+                {
+                    MessageBox.Show("Không thể thôi việc nhân viên đang sử dụng ứng dụng!", "Lỗi!");
+                    return;
+                }
+                if (MessageBox.Show("Bạn có muốn thôi việc nhân viên đã chọn?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                {
+                    return;
+                }
+                Staffing.DeleteStaff(selectedItem.StaffID);
+                MessageBox.Show("Thôi việc nhân viên thành công!", "Thông báo!");
+                lvNhanVien.ItemsSource = Staffing.GetAllStaff(false);
+
             }
-            if (MessageBox.Show("Bạn có muốn xóa nhân viên đã chọn?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            else
+            {
+                if (MessageBox.Show("Bạn có muốn khôi phục nhân viên đã chọn?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                {
+                    return;
+                }
+                Staffing.RestoreStaff(selectedItem.StaffID);
+                MessageBox.Show("khôi phục nhân viên thành công!", "Thông báo!");
+                lvNhanVien.ItemsSource = Staffing.GetAllStaff(true);
+            }
+            
+        }
+
+        private void StateCbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StateCbx == null)
             {
                 return;
             }    
-            Staffing.DeleteStaff(selectedItem.StaffID);
-            MessageBox.Show("Xóa nhân viên thành công!", "Thông báo!");
-            lvNhanVien.ItemsSource = Staffing.GetAllStaff();
+            switch (StateCbx.SelectedIndex)
+            {
+                case 0:
+                    lvNhanVien.ItemsSource = FindStaff(cbxItem.Text, false, txbSearch.Text);
+                    return;
+                case 1:
+                    lvNhanVien.ItemsSource = FindStaff(cbxItem.Text, true, txbSearch.Text);
+                    return;
+                case 2:
+                    lvNhanVien.ItemsSource = FindStaff(cbxItem.Text, null, txbSearch.Text);
+                    return;
+                default:
+                    lvNhanVien.ItemsSource = FindStaff(cbxItem.Text, null, txbSearch.Text);
+                    return;
+
+
+            }
+
+        }
+
+        private void lvNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lvNhanVien == null)
+                return;
+            if (lvNhanVien.SelectedItems.Count == 0)
+                return;
+            var selectedItem = (dynamic)lvNhanVien.SelectedItems[0];
+            Staff selectedstaff = GetStaffByCivilID(selectedItem.CivilID);
+            if (selectedstaff.IsDeleted == true)
+            {
+                btnDel.Content = "Khôi phục";
+            }    
+            else
+            {
+                btnDel.Content = "Thôi việc";
+            }    
         }
     }
 }

@@ -143,6 +143,7 @@
     </Compile>
     <Compile Include="Classes\BitmapHelper.cs" />
     <Compile Include="Classes\BitmapImageConvert.cs" />
+    <Compile Include="Classes\BoolToValueConverter.cs" />
     <Compile Include="DBClasses\Staffing.cs" />
     <Compile Include="DBClasses\Cards.cs" />
     <Compile Include="DBClasses\ParkingVehicle.cs" />
@@ -203,11 +204,7 @@
       <DependentUpon>TraCuuXe.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AdminViewModel.cs" />
-    <Compile Include="ViewModel\BangChamCongViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\DSNhanVienViewModel.cs" />
-    <Compile Include="ViewModel\HomePage1ViewModel.cs" />
-    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NotifyErrorInfoViewModel.cs" />
     <Compile Include="ViewModel\NotifyErrorVewModel1.cs" />
@@ -350,9 +347,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="AForge lib\AForge.dll" />
     <Content Include="AForge lib\AForge.Video.DirectShow.dll" />
