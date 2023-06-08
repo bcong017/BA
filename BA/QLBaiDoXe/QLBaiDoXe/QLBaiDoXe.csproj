@@ -356,7 +356,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CarPic\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="AForge lib\AForge.dll" />
     <Content Include="AForge lib\AForge.Video.DirectShow.dll" />

@@ -26,7 +26,8 @@ namespace QLBaiDoXe.DBClasses
                     TimeStartedParking = DateTime.Now,
                     StaffID = MainWindow.currentUser.StaffID,
                     VehicleType = type,
-                    VehicleTypeID = type.VehicleTypeID
+                    VehicleTypeID = type.VehicleTypeID,
+                    Fee = type.ParkingFee
                 };
                 ParkingCard card = DataProvider.Ins.DB.ParkingCards.FirstOrDefault(x => x.ParkingCardID == cardId);
                 card.CardState = 1;
