@@ -41,7 +41,8 @@ namespace QLBaiDoXe
             {
                 if (MessageBox.Show("Bạn có muốn xóa thẻ đã chọn?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.No)
                     return;
-                if (ListThe.SelectedItems[0] is long value)
+                var selectedItem = (dynamic)ListThe.SelectedItems[0];
+                if (selectedItem.ParkingCardID is long value)
                 {
                     if (Cards.CheckCardState(value) == 1)
                     {
@@ -55,7 +56,7 @@ namespace QLBaiDoXe
                     MessageBox.Show("Không nhận dạng được mã thẻ", "Lỗi");
                     return;
                 }
-                MessageBox.Show("Đã xóa thẻ thành công!", "Thông báo!");
+            MessageBox.Show("Đã xóa thẻ thành công!", "Thông báo!");
                 ListThe.ItemsSource = null;
                 ListThe.ItemsSource = Cards.GetAllParkingCards();
             }
