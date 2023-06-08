@@ -39,8 +39,6 @@ namespace QLBaiDoXe
             }
             else
             {
-
-
                 if (MessageBox.Show("Bạn có muốn xóa thẻ đã chọn?", "Xác nhận", MessageBoxButton.YesNo) == MessageBoxResult.No)
                     return;
                 if (ListThe.SelectedItems[0] is long value)
@@ -55,6 +53,7 @@ namespace QLBaiDoXe
                 else
                 {
                     MessageBox.Show("Không nhận dạng được mã thẻ", "Lỗi");
+                    return;
                 }
                 MessageBox.Show("Đã xóa thẻ thành công!", "Thông báo!");
                 ListThe.ItemsSource = null;

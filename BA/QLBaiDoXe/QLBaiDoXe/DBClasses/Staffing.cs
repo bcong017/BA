@@ -144,6 +144,11 @@ namespace QLBaiDoXe.DBClasses
                 staff.Role = DataProvider.Ins.DB.Roles.FirstOrDefault(x => x.RoleName == role);
                 staff.PhoneNumber = phoneNumber;
                 staff.DateOfBirth = dob?.Date;
+                Account changedaccount = DataProvider.Ins.DB.Accounts.FirstOrDefault(x => x.StaffID == staffId);
+                if (role == "admin")
+                    changedaccount.RoleID = 2;
+                else
+                    changedaccount.RoleID = 1;
                 DataProvider.Ins.DB.SaveChanges();
                 MessageBox.Show("Sửa thông tin nhân viên thành công", "Thông báo!");
                 return;

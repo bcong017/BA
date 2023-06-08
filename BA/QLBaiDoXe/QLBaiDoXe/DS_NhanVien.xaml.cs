@@ -41,12 +41,21 @@ namespace QLBaiDoXe
         }
         private void btnFix_Click(object sender, RoutedEventArgs e)
         {
+            if (lvNhanVien == null)
+                return;
+            if (lvNhanVien.SelectedItems.Count == 0)
+                return;
+            var selectedItem = (dynamic)lvNhanVien.SelectedItems[0];
             if (lvNhanVien.SelectedItem == null)
             {
                 MessageBox.Show("Hãy chọn thông tin nhân viên để sửa!", "Lỗi!");
                 return;
             }
-            var selectedItem = (dynamic)lvNhanVien.SelectedItems[0];
+            if (MainWindow.currentUser.StaffID == selectedItem.StaffID)
+            {
+                MessageBox.Show("Không thể sửa nhân viên đang sử dụng ứng dụng!", "Lỗi!");
+                return;
+            }
             SuaNhanVien snv = new SuaNhanVien();
             snv.CivilID = selectedItem.CivilID;
             snv.ShowDialog();
