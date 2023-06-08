@@ -82,10 +82,20 @@ namespace QLBaiDoXe
                 MessageBox.Show("CMND/CCCD không hợp lệ!");
                 return;
             }
-            if (cbxRole.Text == "Quản trị viên")
-                Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
+            if (String.IsNullOrEmpty(datePicker.Text))
+            {
+                if (cbxRole.Text == "Quản trị viên")
+                    Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, null);
+                else
+                    Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "staff", txbPhoneNumb.Text, txbAddress.Text, null);
+            }
             else
-                Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "staff", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
+            {
+                if (cbxRole.Text == "Quản trị viên")
+                    Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
+                else
+                    Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "staff", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
+            }
         }
 
         private void NumbericPreviewTextInput(object sender, TextCompositionEventArgs e)
