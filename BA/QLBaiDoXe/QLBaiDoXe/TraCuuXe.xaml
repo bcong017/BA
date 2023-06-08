@@ -111,7 +111,7 @@
                         <GridViewColumn Header="Số thẻ">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding ParkingCardID}" HorizontalAlignment="Center" />
+                                    <TextBlock Text="{Binding ParkingCardID, StringFormat={}{0:D10}}" HorizontalAlignment="Center" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

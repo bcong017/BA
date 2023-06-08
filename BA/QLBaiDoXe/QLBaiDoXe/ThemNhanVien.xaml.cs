@@ -20,7 +20,7 @@ namespace QLBaiDoXe
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (!Classes.Validation.isPhoneNumber.IsMatch(txbPhoneNumb.Text))
+            if (!string.IsNullOrWhiteSpace(txbPhoneNumb.Text) && !Classes.Validation.isPhoneNumber.IsMatch(txbPhoneNumb.Text))
             {
                 MessageBox.Show("Số điện thoại không hợp lệ!");
                 return;
@@ -55,7 +55,13 @@ namespace QLBaiDoXe
 
         private void NumbericPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = Classes.Validation.isNumber.IsMatch(e.Text);
+            e.Handled = !Classes.Validation.isNumber.IsMatch(e.Text);
+        }
+
+        private void txbCivilID_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Space)
+                e.Handled = true;
         }
     }
 }

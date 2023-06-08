@@ -44,7 +44,13 @@ namespace QLBaiDoXe
 
         private void CardID_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            e.Handled = Classes.Validation.isNumber.IsMatch(CardID.Text);
+            e.Handled = !Classes.Validation.isNumber.IsMatch(CardID.Text);
+        }
+
+        private void CardID_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Space)
+                e.Handled = true;
         }
     }
 }

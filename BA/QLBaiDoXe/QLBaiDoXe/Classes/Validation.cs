@@ -9,8 +9,8 @@ namespace QLBaiDoXe.Classes
 {
     public static class Validation
     {
-        public static readonly Regex isNumber = new Regex("[^0-9.-]+");
+        public static readonly Regex isNumber = new Regex(@"^\d+$");
         public static readonly Regex isPhoneNumber = new Regex(@"^\d{10}$");
-        public static readonly Regex isCivilId = new Regex(@"^\d{10}$|^\d{12}$");
+        public static readonly Regex isCivilId = new Regex(@"^\d{9}$|^\d{12}$");
     }
 }

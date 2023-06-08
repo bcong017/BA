@@ -127,7 +127,13 @@ namespace QLBaiDoXe
 
         private void YearTextbox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            e.Handled = Classes.Validation.isNumber.IsMatch(e.Text);
+            e.Handled = !Classes.Validation.isNumber.IsMatch(e.Text);
+        }
+
+        private void YearTextbox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Space)
+                e.Handled = true;
         }
     }
 }

@@ -304,7 +304,13 @@ namespace QLBaiDoXe
 
         private void textBox1_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = Classes.Validation.isNumber.IsMatch(e.Text);
+            e.Handled = !Classes.Validation.isNumber.IsMatch(e.Text);
+        }
+
+        private void textBox1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Space)
+                e.Handled = true;
         }
     }
 }
