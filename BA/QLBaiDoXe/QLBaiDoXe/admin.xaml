@@ -46,6 +46,11 @@
             <Button Tag="Xe" x:Name="btnXe" Command="{Binding SelectViewCommand}"  CommandParameter="{Binding ElementName=btnXe}" Style="{StaticResource MaterialDesignFlatLightButton}"  HorizontalAlignment="Left" Height="41.624" Margin="20.343,228.624,0,0" VerticalAlignment="Top" Width="200.9" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="17" Padding="0.4">
                 <materialDesign:PackIcon Kind="Car" Height="29.6" Width="32.067" Foreground="Black" Margin="0,0,148,0"/>
             </Button>
+            <TextBlock HorizontalAlignment="Left" Height="27.334" Margin="70.243,607,0,0" TextWrapping="Wrap" Text="Thay đổi mật khẩu" VerticalAlignment="Top" Width="156.8" RenderTransformOrigin="0.505,0.341" Foreground="#FFFF6363" FontSize="17"/>
+            <Button x:Name="ChangePasswordButton"
+                Style="{StaticResource MaterialDesignFlatLightButton}"  HorizontalAlignment="Left" Height="41.624" Margin="20.343,600,0,0" VerticalAlignment="Top" Width="200.9" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="17" Padding="0,4" Click="ChangePasswordButton_Click" >
+                <materialDesign:PackIcon Kind="PasswordReset" Height="29.6" Width="32.067" Foreground="#FFFF6F6F" Margin="0,0,148,0"/>
+            </Button>
         </Grid>
         <UserControl Content="{Binding SelectedViewModel}" Margin="243,0,0,0"/>
     </Grid>

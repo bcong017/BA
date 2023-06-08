@@ -291,5 +291,15 @@ namespace QLBaiDoXe
         }
         #endregion
 
+        private void ChangePasswordlink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ThayDoiMatKhau tdmk = new ThayDoiMatKhau();
+            tdmk.ShowDialog();
+        }
+
+        private void ChangePasswordlink_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ChangePasswordlink.Cursor = Cursors.Hand;
+        }
     }
 }

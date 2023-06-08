@@ -52,8 +52,8 @@ namespace QLBaiDoXe.DBClasses
                 PhoneNumber = phoneNumber,
                 StaffAddress = address,
                 DateOfBirth = dob?.Date,
-                Role = role
-
+                Role = role,
+                IsDeleted = false,
             };
             DataProvider.Ins.DB.Staffs.Add(newStaff);
             role.Staffs.Add(newStaff);
@@ -100,7 +100,8 @@ namespace QLBaiDoXe.DBClasses
                 PhoneNumber = phoneNumber,
                 StaffAddress = address,
                 DateOfBirth = dob?.Date,
-                Role = role
+                Role = role,
+                IsDeleted = false,
             };
             DataProvider.Ins.DB.Staffs.Add(newStaff);
             role.Staffs.Add(newStaff);
@@ -215,23 +216,26 @@ namespace QLBaiDoXe.DBClasses
                 return false;
         }
 
-        public static bool ChangePassword(string username, string newPassword)
+        public static void ChangePassword(string username, string newPassword, string currentPassword)
         {
             if (DataProvider.Ins.DB.Accounts.Any(x => x.AccountName == username))
             {
                 SHA256 sha256hash = SHA256.Create();
-                string passwordhash = GetHash(sha256hash, newPassword);
+                string passwordhash = GetHash(sha256hash, currentPassword);
                 Account account = DataProvider.Ins.DB.Accounts.FirstOrDefault(x => x.AccountName == username);
-                if (account.AccountPassword != passwordhash)
+                if (account.AccountPassword == passwordhash)
                 {
-                    account.AccountPassword = newPassword;
-                    return true;
-                }                  
+                    string newPasswordHash = GetHash(sha256hash, newPassword);
+                    account.AccountPassword = newPasswordHash;
+                    MessageBox.Show("Thay đổi mật khẩu thành công!", "Thông báo!");
+                    return;
+                }
                 else
-                    return false;
+                {
+                    MessageBox.Show("Bạn đã nhập sai mật khẩu hiện tại!", "Lỗi!");
+                    return;
+                }
             }
-            else
-                return false;
         }
 
         public class TempStaff: Staff

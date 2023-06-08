@@ -83,5 +83,15 @@
             Kind="LogoutVariant" Height="33.6" Width="36.4"
          />
         </Button>
+        <TextBlock x:Name="ChangePasswordlink" 
+                   HorizontalAlignment="Left"   
+                   Margin="355,19,0,0" 
+                   VerticalAlignment="Top" 
+                   FontSize="22" 
+                   TextDecorations="Underline"
+                   Text="Thay đổi mật khẩu"
+                   Foreground="Black" MouseLeftButtonUp="ChangePasswordlink_MouseLeftButtonUp" MouseEnter="ChangePasswordlink_MouseEnter"
+                   >
+        </TextBlock>
     </Grid>
 </Window>

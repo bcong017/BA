@@ -40,9 +40,10 @@ namespace QLBaiDoXe
             }
         }
 
-        private void Window_KeyDown_1(object sender, KeyEventArgs e)
+        private void ChangePasswordButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ThayDoiMatKhau tdmk = new ThayDoiMatKhau();
+            tdmk.ShowDialog();
         }
     }
 }

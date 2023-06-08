@@ -194,6 +194,9 @@
     <Compile Include="SuaNhanVien.xaml.cs">
       <DependentUpon>SuaNhanVien.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ThayDoiMatKhau.xaml.cs">
+      <DependentUpon>ThayDoiMatKhau.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ThemNhanVien.xaml.cs">
       <DependentUpon>ThemNhanVien.xaml</DependentUpon>
     </Compile>
@@ -207,6 +210,7 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NotifyErrorInfoViewModel.cs" />
+    <Compile Include="ViewModel\NotifyErrorPasswordChange.cs" />
     <Compile Include="ViewModel\NotifyErrorVewModel1.cs" />
     <Compile Include="ViewModel\NotifyErrorViewModel2.cs" />
     <Compile Include="ViewUserControl\SwitchViewClass\SwichViewXe.cs" />
@@ -276,6 +280,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SuaNhanVien.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ThayDoiMatKhau.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
