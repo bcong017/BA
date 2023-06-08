@@ -72,32 +72,7 @@ namespace QLBaiDoXe
         {
             if (e.Key == Key.Enter)
             {
-                currentUser = Staffing.LogIn(UsernameTextbox.Text, PasswordTextbox.Password);
-                if (currentUser != null)
-                {
-                    MessageBox.Show("Đăng nhập thành công", "Thông báo!");
-                    if (currentUser.RoleID == 2)
-                    {
-                        admin adminWindow = new admin();
-                        adminWindow.Show();
-                        this.Close();
-                    }
-                    else
-                    {
-                        Homepage1 homepage = new Homepage1();
-                        foreach (var item in DataProvider.Ins.DB.Vehicles.Where(x => x.VehicleState == 1).ToList())
-                        {
-                            item.StaffID = MainWindow.currentUser.StaffID;
-                        }
-                        homepage.Show();
-                        DataProvider.Ins.DB.SaveChanges();
-                        this.Close();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Sai thông tin đăng nhập", "Thông báo!");
-                }
+                LoginButton_Click(null,null);
             }
         }
     }
