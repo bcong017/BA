@@ -17,7 +17,7 @@
             <Rectangle Fill="White" RadiusX="20" RadiusY="20"/>
             <ListView x:Name="lvNhanVien" 
                       Margin="0,0,0,36"
-                      ScrollViewer.HorizontalScrollBarVisibility="Visible" SelectionChanged="lvNhanVien_SelectionChanged" >
+                      ScrollViewer.HorizontalScrollBarVisibility="Visible" SelectionChanged="lvNhanVien_SelectionChanged" SelectionMode="Single">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
