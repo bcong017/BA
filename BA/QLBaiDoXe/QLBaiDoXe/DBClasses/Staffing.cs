@@ -124,7 +124,7 @@ namespace QLBaiDoXe.DBClasses
             MessageBox.Show("Thêm quản trị viên thành công!", "Thông báo!");
         }
 
-        public static void ChangeStaffInfo(int staffId, string staffNewName, string civilId, string role, string phoneNumber, string address, DateTime dob)
+        public static void ChangeStaffInfo(int staffId, string staffNewName, string civilId, string role, String phoneNumber, String address, DateTime? dob)
         {
             Staff checkStaff = DataProvider.Ins.DB.Staffs.FirstOrDefault(x => x.CivilID == civilId);
             if (checkStaff != null)
@@ -143,7 +143,7 @@ namespace QLBaiDoXe.DBClasses
                 staff.CivilID = civilId;
                 staff.Role = DataProvider.Ins.DB.Roles.FirstOrDefault(x => x.RoleName == role);
                 staff.PhoneNumber = phoneNumber;
-                staff.DateOfBirth = dob.Date;
+                staff.DateOfBirth = dob?.Date;
                 DataProvider.Ins.DB.SaveChanges();
                 MessageBox.Show("Sửa thông tin nhân viên thành công", "Thông báo!");
                 return;
