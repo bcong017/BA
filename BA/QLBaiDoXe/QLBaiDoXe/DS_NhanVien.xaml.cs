@@ -29,7 +29,7 @@ namespace QLBaiDoXe
         {
             ThemNhanVien add = new ThemNhanVien();
             add.ShowDialog();
-            lvNhanVien.ItemsSource = Staffing.GetAllStaff(false);
+            StateCbx_SelectionChanged(null, null);
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -50,7 +50,7 @@ namespace QLBaiDoXe
             SuaNhanVien snv = new SuaNhanVien();
             snv.CivilID = selectedItem.CivilID;
             snv.ShowDialog();
-            lvNhanVien.ItemsSource = Staffing.GetAllStaff(false);
+            StateCbx_SelectionChanged(null, null);
         }
         private void btnDel_Click(object sender, RoutedEventArgs e)
         {
@@ -78,7 +78,7 @@ namespace QLBaiDoXe
                 }
                 Staffing.DeleteStaff(selectedItem.StaffID);
                 MessageBox.Show("Thôi việc nhân viên thành công!", "Thông báo!");
-                lvNhanVien.ItemsSource = Staffing.GetAllStaff(false);
+                StateCbx_SelectionChanged(null, null);
 
             }
             else
@@ -89,7 +89,7 @@ namespace QLBaiDoXe
                 }
                 Staffing.RestoreStaff(selectedItem.StaffID);
                 MessageBox.Show("khôi phục nhân viên thành công!", "Thông báo!");
-                lvNhanVien.ItemsSource = Staffing.GetAllStaff(true);
+                StateCbx_SelectionChanged(null, null);
             }
             
         }
