@@ -1,4 +1,5 @@
-﻿using QLBaiDoXe.DBClasses;
+﻿using QLBaiDoXe.Classes;
+using QLBaiDoXe.DBClasses;
 using QLBaiDoXe.ParkingLotModel;
 using System;
 using System.Collections.Generic;
@@ -17,16 +18,16 @@ namespace QLBaiDoXe
         public SuaNhanVien()
         {
             InitializeComponent();
-            
+
         }
         private string civilID;
         public string CivilID
         {
             get { return civilID; }
-            set 
-            { 
-                civilID = value; 
-                staff = Staffing.GetStaffByCivilID(civilID); 
+            set
+            {
+                civilID = value;
+                staff = Staffing.GetStaffByCivilID(civilID);
             }
         }
 
@@ -71,17 +72,25 @@ namespace QLBaiDoXe
 
         private void btnAdjust_Click(object sender, RoutedEventArgs e)
         {
+            if (!Validation.isPhoneNumber.IsMatch(txbPhoneNumb.Text))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ!");
+                return;
+            }
+            else if (!Validation.isCivilId.IsMatch(txbCivlID.Text))
+            {
+                MessageBox.Show("CMND/CCCD không hợp lệ!");
+                return;
+            }
             if (cbxRole.Text == "Quản trị viên")
                 Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
             else
                 Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "staff", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
         }
 
-        private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
-
         private void NumbericPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = _regex.IsMatch(e.Text);
+            e.Handled = Validation.isNumber.IsMatch(e.Text);
         }
     }
 }

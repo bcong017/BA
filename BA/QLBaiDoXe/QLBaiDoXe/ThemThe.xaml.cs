@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using QLBaiDoXe.Classes;
 using QLBaiDoXe.ParkingLotModel;
 
 namespace QLBaiDoXe
@@ -39,6 +40,11 @@ namespace QLBaiDoXe
         private void TextBlock_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             this.Close();
+        }
+
+        private void CardID_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = Classes.Validation.isNumber.IsMatch(CardID.Text);
         }
     }
 }

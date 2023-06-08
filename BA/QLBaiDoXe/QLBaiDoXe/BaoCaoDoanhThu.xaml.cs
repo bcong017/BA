@@ -125,5 +125,9 @@ namespace QLBaiDoXe
             SeriesCollection.AddRange(lineSeries);
         }
 
+        private void YearTextbox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = Classes.Validation.isNumber.IsMatch(e.Text);
+        }
     }
 }

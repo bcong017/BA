@@ -32,5 +32,10 @@ namespace QLBaiDoXe
                 MessageBox.Show("Dữ liệu nhập vào không hợp lệ.\nVui lòng chỉ nhập số","Lỗi!");
             }
         }
+
+        private void MotorbikeFeeTxb_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = Classes.Validation.isNumber.IsMatch(e.Text);
+        }
     }
 }

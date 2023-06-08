@@ -76,5 +76,10 @@ namespace QLBaiDoXe
         {
             CardSearchTxb_TextChanged(null,null);
         }
+
+        private void CardSearchTxb_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = Classes.Validation.isNumber.IsMatch(e.Text);
+        }
     } 
 }
