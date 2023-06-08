@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using QLBaiDoXe.DBClasses;
 using System.Text.RegularExpressions;
+using QLBaiDoXe.Classes;
 
 namespace QLBaiDoXe
 {
@@ -19,13 +20,23 @@ namespace QLBaiDoXe
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
+            if (!Classes.Validation.isPhoneNumber.IsMatch(txbPhoneNumb.Text))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ!");
+                return;
+            }
+            else if (!Classes.Validation.isCivilId.IsMatch(txbCivilID.Text))
+            {
+                MessageBox.Show("CMND/CCCD không hợp lệ!");
+                return;
+            }
             if (cbxRole.Text == "Quản trị viên")
             {
                 if (string.IsNullOrEmpty(DatePicker.Text))
                     Staffing.AddAdminInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, null, txbAccName.Text, txbCivilID.Text);
                 else
                     Staffing.AddAdminInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(DatePicker.Text), txbAccName.Text, txbCivilID.Text);
-                
+
             }
             else
             {
@@ -33,7 +44,7 @@ namespace QLBaiDoXe
                     Staffing.AddStaffInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, null, txbAccName.Text, txbCivilID.Text);
                 else
                     Staffing.AddStaffInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(DatePicker.Text), txbAccName.Text, txbCivilID.Text);
-                
+
             }
         }
 
@@ -42,11 +53,9 @@ namespace QLBaiDoXe
             this.Close();
         }
 
-        private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
-
         private void NumbericPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = _regex.IsMatch(e.Text);
+            e.Handled = Classes.Validation.isNumber.IsMatch(e.Text);
         }
     }
 }

@@ -301,5 +301,10 @@ namespace QLBaiDoXe
         {
             ChangePasswordlink.Cursor = Cursors.Hand;
         }
+
+        private void textBox1_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = Classes.Validation.isNumber.IsMatch(e.Text);
+        }
     }
 }
