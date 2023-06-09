@@ -14,8 +14,8 @@ namespace QLBaiDoXe
     /// </summary>
     public partial class MainWindow : Window
     {
-        //public static int currentStaffID;
-        public static Account currentUser;
+        public static bool IsAdmin;
+        public static Staff currentUser;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace QLBaiDoXe
             currentUser = Staffing.LogIn(UsernameTextbox.Text, PasswordTextbox.Password);
             if (currentUser != null )
             {
-                if (currentUser.Staff.IsDeleted == true)
+                if (currentUser.IsDeleted == true)
                 {
                     MessageBox.Show("Tài khoản của bạn đã bị vô hiệu hóa!", "Thông báo!");
                     return;
@@ -45,6 +45,7 @@ namespace QLBaiDoXe
                 MessageBox.Show("Đăng nhập thành công", "Thông báo!");
                 if (currentUser.RoleID == 2)
                 {
+                    IsAdmin = true;
                     admin adminWindow = new admin();
                     adminWindow.Show();
                     this.Close();

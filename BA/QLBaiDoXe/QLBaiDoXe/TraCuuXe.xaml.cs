@@ -46,7 +46,7 @@ namespace QLBaiDoXe
 
         private DateTime? CheckInput()
         {
-            string format = string.IsNullOrWhiteSpace(TimePicker.Text) == true ? "d/M/yyyy" : "d/M/yyyy HH:mm";
+            string format = string.IsNullOrWhiteSpace(TimePicker.Text) == true ? "d/M/yyyy" : "d/M/yyyy H:mm";
             string parse = string.Format("{0}/{1}/{2}{3}", cbxDay.Text, cbxMonth.Text, cbxYear.Text, string.IsNullOrWhiteSpace(TimePicker.Text) == true ? string.Empty : $" {TimePicker.Text}");
             if (DateTime.TryParseExact(parse, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
             {

@@ -25,6 +25,7 @@ namespace QLBaiDoXe
     /// </summary>
     public partial class Homepage1 : Window
     {
+        public static Account account = new Account();
         DateTime date = DateTime.Now;
         public Homepage1()
         {
@@ -35,6 +36,7 @@ namespace QLBaiDoXe
             VehicleIn_num.Text = DBClasses.ParkingVehicle.GetVehicleInNumber(date).ToString();
             VehicleOut_num.Text = DBClasses.ParkingVehicle.GetVehicleOutNumber(date).ToString();
             VehicleParked_num.Text = DBClasses.ParkingVehicle.GetParkedVehicleNumber().ToString();
+            account = DataProvider.Ins.DB.Accounts.Where(x => x.StaffID == MainWindow.currentUser.StaffID).FirstOrDefault();
         }
 
         private void Homepage1_Closing(object sender, CancelEventArgs e)
@@ -294,7 +296,7 @@ namespace QLBaiDoXe
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Staffing.LogOut(MainWindow.currentUser.AccountName);
+            Staffing.LogOut(account.AccountName);
             MainWindow.currentUser = null;
             MainWindow loginWindow = new MainWindow();
             loginWindow.Show();

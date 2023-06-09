@@ -66,10 +66,8 @@ namespace QLBaiDoXe.DBClasses
             {
                 AccountName = accname,
                 AccountPassword = passwordhash,
-                RoleID = 1,
                 StaffID = staff.StaffID,
                 Staff = staff,
-                Role = DataProvider.Ins.DB.Roles.FirstOrDefault(x => x.RoleID == 1)
             };
             DataProvider.Ins.DB.Accounts.Add(staffAccount);
             DataProvider.Ins.DB.SaveChanges();
@@ -114,10 +112,8 @@ namespace QLBaiDoXe.DBClasses
             {
                 AccountName = accname,
                 AccountPassword = passwordhash,
-                RoleID = 2,
                 StaffID = admin.StaffID,
                 Staff = admin,
-                Role = DataProvider.Ins.DB.Roles.FirstOrDefault(x => x.RoleID == 2)
             };
             DataProvider.Ins.DB.Accounts.Add(adminAccount);
             DataProvider.Ins.DB.SaveChanges();
@@ -145,10 +141,10 @@ namespace QLBaiDoXe.DBClasses
                 staff.PhoneNumber = phoneNumber;
                 staff.DateOfBirth = dob?.Date;
                 Account changedaccount = DataProvider.Ins.DB.Accounts.FirstOrDefault(x => x.StaffID == staffId);
-                if (role == "admin")
-                    changedaccount.RoleID = 2;
-                else
-                    changedaccount.RoleID = 1;
+                //if (role == "admin")
+                //    changedaccount.RoleID = 2;
+                //else
+                //    changedaccount.RoleID = 1;
                 DataProvider.Ins.DB.SaveChanges();
                 MessageBox.Show("Sửa thông tin nhân viên thành công", "Thông báo!");
                 return;
@@ -184,7 +180,7 @@ namespace QLBaiDoXe.DBClasses
                 return false;
         }
 
-        public static Account LogIn(string username, string password)
+        public static Staff LogIn(string username, string password)
         {
             if (DataProvider.Ins.DB.Accounts.Any(x => x.AccountName == username))
             {
@@ -193,7 +189,11 @@ namespace QLBaiDoXe.DBClasses
                 Debug.WriteLine(passwordhash);
                 Account account = DataProvider.Ins.DB.Accounts.FirstOrDefault(x => x.AccountName == username);
                 if (account.AccountPassword == passwordhash)
-                    return account;
+                {
+                    Staff staff = DataProvider.Ins.DB.Staffs.Where(x=>x.StaffID == account.StaffID).FirstOrDefault();
+                    return staff;
+                }    
+                    
                 else
                     return null;
             }

@@ -115,7 +115,7 @@ namespace QLBaiDoXe.DBClasses
                     && x.TimeStartedParking.Month == timeIn.Month
                     && x.TimeStartedParking.Year == timeIn.Year
                     && x.TimeStartedParking.Hour == timeIn.Hour)
-                .ToList()
+                .OrderBy(item=> item.TimeStartedParking).ToList()
                 .Select((item, index) => new TempParkingVehicle(item, index + 1)).ToList();
         }
 
@@ -126,18 +126,8 @@ namespace QLBaiDoXe.DBClasses
                     x.TimeStartedParking.Day == timeIn.Day 
                     && x.TimeStartedParking.Month == timeIn.Month 
                     && x.TimeStartedParking.Year == timeIn.Year)
-                .ToList()
+                .OrderBy(item=> item.TimeStartedParking).ToList()
                 .Select((item, index) => new TempParkingVehicle(item, index + 1)).ToList();
-            /*var list = new List<TempParkingVehicle>();
-            int counter = 0;
-            foreach (var item in DataProvider.Ins.DB.Vehicles.Where(x => x.TimeStartedParking.Day == timeIn.Day && x.TimeStartedParking.Month == timeIn.Month
-                                                        && x.TimeStartedParking.Year == timeIn.Year).ToList())
-            {
-                counter++;
-                var temp = new TempParkingVehicle(item, counter);
-                list.Add(temp);
-            }
-            return list;*/
         }
 
         public static DateTime GetLastDayThatHaveCar()
