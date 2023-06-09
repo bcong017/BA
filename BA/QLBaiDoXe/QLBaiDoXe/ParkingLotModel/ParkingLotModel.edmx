@@ -41,7 +41,7 @@
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="StaffAddress" Type="nvarchar(max)" />
           <Property Name="DateOfBirth" Type="date" />
-          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Timekeeps">
           <Key>
@@ -64,7 +64,7 @@
           <Property Name="VehicleState" Type="int" Nullable="false" />
           <Property Name="VehicleImage" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Fee" Type="int" Nullable="false" />
-          <Property Name="StaffID" Type="int" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="VehicleTypes">
           <Key>
@@ -127,7 +127,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Vehicles_StaffID_FK">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
           <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
@@ -264,7 +264,7 @@
           <NavigationProperty Name="Role" Relationship="ParkingLotModel.Staff_RoleID_FK" FromRole="Staff" ToRole="Role" />
           <NavigationProperty Name="Timekeeps" Relationship="ParkingLotModel.Timekeeps_StaffID_FK" FromRole="Staff" ToRole="Timekeep" />
           <NavigationProperty Name="Vehicles" Relationship="ParkingLotModel.Vehicles_StaffID_FK" FromRole="Staff" ToRole="Vehicle" />
-          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Timekeep">
           <Key>
@@ -288,7 +288,7 @@
           <Property Name="VehicleState" Type="Int32" Nullable="false" />
           <Property Name="VehicleImage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Fee" Type="Int32" Nullable="false" />
-          <Property Name="StaffID" Type="Int32" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Staff" Relationship="ParkingLotModel.Vehicles_StaffID_FK" FromRole="Vehicle" ToRole="Staff" />
           <NavigationProperty Name="VehicleType" Relationship="ParkingLotModel.Vehicles_VehicleTypeID_FK" FromRole="Vehicle" ToRole="VehicleType" />
         </EntityType>
