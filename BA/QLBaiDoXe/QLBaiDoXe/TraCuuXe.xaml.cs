@@ -1,6 +1,4 @@
-﻿using ControlzEx.Standard;
-using QLBaiDoXe.DBClasses;
-using QLBaiDoXe.ParkingLotModel;
+﻿using QLBaiDoXe.ParkingLotModel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,7 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using static QLBaiDoXe.DBClasses.ParkingVehicle;
-using static System.Net.Mime.MediaTypeNames;
+
 
 
 namespace QLBaiDoXe
@@ -29,7 +27,7 @@ namespace QLBaiDoXe
             }
             else
             {
-                LastDayThatHaveCar = ParkingVehicle.GetLastDayThatHaveCar();
+                LastDayThatHaveCar = GetLastDayThatHaveCar();
                 cbxDay.Text = LastDayThatHaveCar.Day.ToString();
                 cbxMonth.Text = LastDayThatHaveCar.Month.ToString();
                 cbxYear.Text = LastDayThatHaveCar.Year.ToString();
@@ -46,8 +44,8 @@ namespace QLBaiDoXe
 
         private DateTime? CheckInput()
         {
-            string format = string.IsNullOrWhiteSpace(TimePicker.Text) == true ? "d/M/yyyy" : "d/M/yyyy H:mm";
-            string parse = string.Format("{0}/{1}/{2}{3}", cbxDay.Text, cbxMonth.Text, cbxYear.Text, string.IsNullOrWhiteSpace(TimePicker.Text) == true ? string.Empty : $" {TimePicker.Text}");
+            string format = string.IsNullOrWhiteSpace(tpTime.Text) == true ? "d/M/yyyy" : "d/M/yyyy H:mm";
+            string parse = string.Format("{0}/{1}/{2}{3}", cbxDay.Text, cbxMonth.Text, cbxYear.Text, string.IsNullOrWhiteSpace(tpTime.Text) == true ? string.Empty : $" {tpTime.Text}");
             if (DateTime.TryParseExact(parse, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
             {
                 return date;
@@ -60,13 +58,13 @@ namespace QLBaiDoXe
             List<TempParkingVehicle> result = new List<TempParkingVehicle>();
             DateTime? checkDate = CheckInput();
             if (checkDate == null) { return; }
-            if (string.IsNullOrWhiteSpace(TimePicker.Text) == false)
+            if (string.IsNullOrWhiteSpace(tpTime.Text) == false)
             {
-                result = ParkingVehicle.SearchVehicle_TimeIn_DateAndHour(checkDate.Value);
+                result = SearchVehicle_TimeIn_DateAndHour(checkDate.Value);
             }
             else
             {
-                result = ParkingVehicle.SearchVehicle_TimeIn_DateOnly(checkDate.Value);
+                result = SearchVehicle_TimeIn_DateOnly(checkDate.Value);
             }
 
             if (result.Count == 0)

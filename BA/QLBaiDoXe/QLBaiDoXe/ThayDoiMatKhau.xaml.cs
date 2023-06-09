@@ -31,10 +31,7 @@ namespace QLBaiDoXe
                 MessageBox.Show("Bạn đã nhập lại sai mật khẩu!", "Thông báo!");
                 return;
             }
-            if (MainWindow.IsAdmin)
-                Staffing.ChangePassword(admin.account.AccountName, txbNewPwd.Text, txbCurrentPwd.Text);
-            else
-                Staffing.ChangePassword(Homepage1.account.AccountName, txbNewPwd.Text, txbCurrentPwd.Text);
+            Staffing.ChangePassword(MainWindow.currentAccount.AccountName, txbNewPwd.Text, txbCurrentPwd.Text);
             txbCurrentPwd.Clear();
             txbNewPwd.Clear();
             txbRePwd.Clear();

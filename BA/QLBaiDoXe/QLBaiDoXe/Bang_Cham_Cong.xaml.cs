@@ -15,63 +15,63 @@ namespace QLBaiDoXe
         public Bang_Cham_Cong()
         {
             InitializeComponent();
-            StartDateDP.Text = EndDateDP.Text = DateTime.Now.Date.ToString();
-            StartDateDP.DisplayDateStart = Staffing.GetFirstLogin();
-            StartDateDP.DisplayDateEnd = Staffing.GetLastLogin();
-            EndDateDP.DisplayDateEnd = StartDateDP.DisplayDateEnd;
+            dpStartDate.Text = dpEndDate.Text = DateTime.Now.Date.ToString();
+            dpStartDate.DisplayDateStart = Staffing.GetFirstLogin();
+            dpStartDate.DisplayDateEnd = Staffing.GetLastLogin();
+            dpEndDate.DisplayDateEnd = dpStartDate.DisplayDateEnd;
         }
 
         private void StaffNameTxb_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            if (string.IsNullOrEmpty(StartDateDP.Text) || string.IsNullOrEmpty(EndDateDP.Text))
-                TimekeepLV.ItemsSource = Staffing.GetTimekeepForStaff(StaffNameTxb.Text);
-            else if (DateTime.TryParseExact(StartDateDP.Text + " 00:00:00", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate)
-                && DateTime.TryParseExact(EndDateDP.Text + " 23:59:59", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
+            if (string.IsNullOrEmpty(dpStartDate.Text) || string.IsNullOrEmpty(dpEndDate.Text))
+                lvTimekeep.ItemsSource = Staffing.GetTimekeepForStaff(txbStaffName.Text);
+            else if (DateTime.TryParseExact(dpStartDate.Text + " 00:00:00", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate)
+                && DateTime.TryParseExact(dpEndDate.Text + " 23:59:59", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
             {
-                TimekeepLV.ItemsSource = Staffing.GetSpecificTimekeeps(StaffNameTxb.Text, startDate, endDate);
+                lvTimekeep.ItemsSource = Staffing.GetSpecificTimekeeps(txbStaffName.Text, startDate, endDate);
             }
         }
 
         private void StartDateDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(StartDateDP.Text) == false
-                && DateTime.TryParseExact(StartDateDP.Text + " 00:00:00", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate))
+            if (string.IsNullOrWhiteSpace(dpStartDate.Text) == false
+                && DateTime.TryParseExact(dpStartDate.Text + " 00:00:00", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate))
             {
-                EndDateDP.DisplayDateStart = startDate;
-                if (EndDateDP.SelectedDate?.CompareTo(startDate) < 0)
+                dpEndDate.DisplayDateStart = startDate;
+                if (dpEndDate.SelectedDate?.CompareTo(startDate) < 0)
                 {
-                    EndDateDP.SelectedDate = startDate.Date;
+                    dpEndDate.SelectedDate = startDate.Date;
                 }
                 DateTime endDate = DateTime.MinValue;
-                bool hasEndDate = string.IsNullOrWhiteSpace(EndDateDP.Text) == false
-                    && DateTime.TryParseExact(EndDateDP.Text + " 23:59:59", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out endDate);
-                if (string.IsNullOrWhiteSpace(StaffNameTxb.Text) == false)
+                bool hasEndDate = string.IsNullOrWhiteSpace(dpEndDate.Text) == false
+                    && DateTime.TryParseExact(dpEndDate.Text + " 23:59:59", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out endDate);
+                if (string.IsNullOrWhiteSpace(txbStaffName.Text) == false)
                 {
-                    TimekeepLV.ItemsSource = hasEndDate ? Staffing.GetSpecificTimekeeps(StaffNameTxb.Text, startDate, endDate) : Staffing.GetTimekeepForStartDateAndName(StaffNameTxb.Text, startDate);
+                    lvTimekeep.ItemsSource = hasEndDate ? Staffing.GetSpecificTimekeeps(txbStaffName.Text, startDate, endDate) : Staffing.GetTimekeepForStartDateAndName(txbStaffName.Text, startDate);
                 }
                 else
                 {
-                    TimekeepLV.ItemsSource = hasEndDate ? Staffing.GetTimekeepForDate(startDate, endDate) : Staffing.GetTimekeepForStartDate(startDate);
+                    lvTimekeep.ItemsSource = hasEndDate ? Staffing.GetTimekeepForDate(startDate, endDate) : Staffing.GetTimekeepForStartDate(startDate);
                 }
             }
         }
 
         private void EndDateDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(EndDateDP.Text) == false
-                && DateTime.TryParseExact(EndDateDP.Text + " 23:59:59", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
+            if (string.IsNullOrWhiteSpace(dpEndDate.Text) == false
+                && DateTime.TryParseExact(dpEndDate.Text + " 23:59:59", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
             {
                 DateTime startDate = DateTime.MinValue;
-                bool hasStartDate = string.IsNullOrWhiteSpace(StartDateDP.Text) == false
-                    && DateTime.TryParseExact(StartDateDP.Text + " 00:00:00", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate);
-                if (string.IsNullOrWhiteSpace(StaffNameTxb.Text) == false)
+                bool hasStartDate = string.IsNullOrWhiteSpace(dpStartDate.Text) == false
+                    && DateTime.TryParseExact(dpStartDate.Text + " 00:00:00", "d/M/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate);
+                if (string.IsNullOrWhiteSpace(txbStaffName.Text) == false)
                 {
-                    TimekeepLV.ItemsSource = hasStartDate ? Staffing.GetSpecificTimekeeps(StaffNameTxb.Text, startDate, endDate) : Staffing.GetTimekeepForEndDateAndName(StaffNameTxb.Text, endDate);
+                    lvTimekeep.ItemsSource = hasStartDate ? Staffing.GetSpecificTimekeeps(txbStaffName.Text, startDate, endDate) : Staffing.GetTimekeepForEndDateAndName(txbStaffName.Text, endDate);
                 }
                 else
                 {
-                    TimekeepLV.ItemsSource = hasStartDate ? Staffing.GetTimekeepForDate(startDate, endDate) : Staffing.GetTimekeepForEndDate(endDate);
+                    lvTimekeep.ItemsSource = hasStartDate ? Staffing.GetTimekeepForDate(startDate, endDate) : Staffing.GetTimekeepForEndDate(endDate);
                 }
             }
         }

@@ -16,7 +16,7 @@ namespace QLBaiDoXe
         {
             InitializeComponent();
             ListThe.ItemsSource = Cards.GetAllParkingCards();
-            StateCbx.SelectedIndex = 2;
+            cbxState.SelectedIndex = 2;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -65,11 +65,11 @@ namespace QLBaiDoXe
         private void CardSearchTxb_TextChanged(object sender, TextChangedEventArgs e)
         {
             long? id = null;
-            if (!string.IsNullOrEmpty(CardSearchTxb.Text) && long.TryParse(CardSearchTxb.Text, out long cardid))
+            if (!string.IsNullOrEmpty(txbCardSearch.Text) && long.TryParse(txbCardSearch.Text, out long cardid))
             {
                 id = cardid;
             }
-            ListThe.ItemsSource = Cards.FindCards(id, StateCbx.SelectedIndex);
+            ListThe.ItemsSource = Cards.FindCards(id, cbxState.SelectedIndex);
         }
 
         private void StateCbx_SelectionChanged(object sender, SelectionChangedEventArgs e)

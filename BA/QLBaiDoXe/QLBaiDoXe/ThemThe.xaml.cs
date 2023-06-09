@@ -14,25 +14,25 @@ namespace QLBaiDoXe
         public ThemThe()
         {
             InitializeComponent();
-            CardID.Focus();
+            txbCardID.Focus();
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int type = 0;
-            if (TypeCbx.SelectedIndex == 1)
+            if (cbxType.SelectedIndex == 1)
                 type= 1;
-            if (CardID.Text.Length == 10)
+            if (txbCardID.Text.Length == 10)
             {
-                long temp = long.Parse(CardID.Text);
+                long temp = long.Parse(txbCardID.Text);
                 if (DataProvider.Ins.DB.ParkingCards.Any(x => x.ParkingCardID == temp)) {
                     MessageBox.Show("Mã số thẻ này đã tồn tại", "Lỗi!", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
                 else
                 {
-                    DBClasses.Cards.AddCard(long.Parse(CardID.Text),type);
+                    DBClasses.Cards.AddCard(long.Parse(txbCardID.Text),type);
                     MessageBox.Show("Thêm thẻ thành công", "Thông báo!");
-                    CardID.Clear();
+                    txbCardID.Clear();
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace QLBaiDoXe
 
         private void CardID_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            e.Handled = !Classes.Validation.isNumber.IsMatch(CardID.Text);
+            e.Handled = !Classes.Validation.isNumber.IsMatch(txbCardID.Text);
         }
 
         private void CardID_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)

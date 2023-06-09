@@ -14,8 +14,8 @@ namespace QLBaiDoXe
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static bool IsAdmin;
         public static Staff currentUser;
+        public static Account currentAccount;
         public MainWindow()
         {
             InitializeComponent();
@@ -23,20 +23,19 @@ namespace QLBaiDoXe
             Debug.WriteLine("last log in date: " + Settings.Default.currentDate.ToString());
             if (DateTime.Now.Month != Settings.Default.currentDate.Month)
             {
-                //Finance.CreateFinancialReport();
                 Settings.Default.todayVehicleIn = Settings.Default.todayVehicleOut = 0;
             }
             Settings.Default.currentDate = DateTime.Now;
             Settings.Default.Save();
             Debug.WriteLine("current date: " + Settings.Default.currentDate.ToString());
-            //this.DataContext = new LoginViewModel();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            currentUser = Staffing.LogIn(UsernameTextbox.Text, PasswordTextbox.Password);
-            if (currentUser != null )
+            if (Staffing.LogIn(txbUsername.Text, txbPassword.Password) != null )
             {
+                currentUser = Staffing.LogIn(txbUsername.Text, txbPassword.Password);
+                currentAccount = DataProvider.Ins.DB.Accounts.Where(x => x.StaffID == currentUser.StaffID).FirstOrDefault();
                 if (currentUser.IsDeleted == true)
                 {
                     MessageBox.Show("Tài khoản của bạn đã bị vô hiệu hóa!", "Thông báo!");
@@ -45,7 +44,6 @@ namespace QLBaiDoXe
                 MessageBox.Show("Đăng nhập thành công", "Thông báo!");
                 if (currentUser.RoleID == 2)
                 {
-                    IsAdmin = true;
                     admin adminWindow = new admin();
                     adminWindow.Show();
                     this.Close();

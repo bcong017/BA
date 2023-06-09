@@ -22,7 +22,7 @@ namespace QLBaiDoXe
         public DS_NhanVien()
         {
             InitializeComponent();
-            StateCbx.SelectedIndex = 0;
+            cbxState.SelectedIndex = 0;
             lvNhanVien.ItemsSource = Staffing.GetAllStaff(false);
         }
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -43,14 +43,13 @@ namespace QLBaiDoXe
         {
             if (lvNhanVien == null)
                 return;
-            if (lvNhanVien.SelectedItems.Count == 0)
-                return;
-            var selectedItem = (dynamic)lvNhanVien.SelectedItems[0];
-            if (lvNhanVien.SelectedItem == null)
+            
+            if (lvNhanVien.SelectedItem == null || lvNhanVien.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Hãy chọn thông tin nhân viên để sửa!", "Lỗi!");
                 return;
             }
+            var selectedItem = (dynamic)lvNhanVien.SelectedItems[0];
             if (MainWindow.currentUser.StaffID == selectedItem.StaffID)
             {
                 MessageBox.Show("Không thể sửa nhân viên đang sử dụng ứng dụng!", "Lỗi!");
@@ -65,17 +64,15 @@ namespace QLBaiDoXe
         {
             if (lvNhanVien == null)
                 return;
-            if (lvNhanVien.SelectedItems.Count == 0)
-                return;
-            var selectedItem = (dynamic)lvNhanVien.SelectedItems[0];
+            
             if (btnDel.Content.ToString() == "Thôi việc")
             {
-                if (lvNhanVien.SelectedItem == null)
+                if (lvNhanVien.SelectedItem == null || lvNhanVien.SelectedItems.Count == 0)
                 {
                     MessageBox.Show("Hãy chọn thông tin nhân viên cần thôi việc!", "Lỗi!");
                     return;
                 }
-                
+                var selectedItem = (dynamic)lvNhanVien.SelectedItems[0];
                 if (MainWindow.currentUser.StaffID == selectedItem.StaffID)
                 {
                     MessageBox.Show("Không thể thôi việc nhân viên đang sử dụng ứng dụng!", "Lỗi!");
@@ -96,6 +93,7 @@ namespace QLBaiDoXe
                 {
                     return;
                 }
+                var selectedItem = (dynamic)lvNhanVien.SelectedItems[0];
                 Staffing.RestoreStaff(selectedItem.StaffID);
                 MessageBox.Show("khôi phục nhân viên thành công!", "Thông báo!");
                 StateCbx_SelectionChanged(null, null);
@@ -105,11 +103,11 @@ namespace QLBaiDoXe
 
         private void StateCbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (StateCbx == null)
+            if (cbxState == null)
             {
                 return;
             }    
-            switch (StateCbx.SelectedIndex)
+            switch (cbxState.SelectedIndex)
             {
                 case 0:
                     lvNhanVien.ItemsSource = FindStaff(cbxItem.Text, false, txbSearch.Text);

@@ -91,7 +91,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button Content="Sửa" HorizontalAlignment="Left" Height="36" Margin="684,402,0,0" VerticalAlignment="Top" Width="131" Foreground="White" FontSize="16" Click="btnFix_Click"/>
+            <Button x:Name="btnEdit" Content="Sửa" HorizontalAlignment="Left" Height="36" Margin="684,402,0,0" VerticalAlignment="Top" Width="131" Foreground="White" FontSize="16" Click="btnFix_Click"/>
             <Button x:Name="btnDel" Content="Thôi việc" HorizontalAlignment="Left" Height="36" Margin="860,402,0,0" VerticalAlignment="Top" Width="128" Foreground="White" FontSize="16" Click="btnDel_Click" Background="#FFFF3F3F"/>
 
 
@@ -109,12 +109,12 @@
                 <ComboBoxItem Content="Chức vụ" />
                 <ComboBoxItem Content="Địa chỉ" />
             </ComboBox>
-            <ComboBox x:Name="StateCbx" materialDesign:HintAssist.Hint="Tình trạng" HorizontalAlignment="Left" Height="35" Margin="670,35,0,0" VerticalAlignment="Top" Width="145" FontSize="20" SelectedIndex="0" SelectionChanged="StateCbx_SelectionChanged">
+            <ComboBox x:Name="cbxState" materialDesign:HintAssist.Hint="Tình trạng" HorizontalAlignment="Left" Height="35" Margin="670,35,0,0" VerticalAlignment="Top" Width="145" FontSize="20" SelectedIndex="0" SelectionChanged="StateCbx_SelectionChanged">
                 <ComboBoxItem Content="Đang làm việc"/>
                 <ComboBoxItem Content="Đã nghỉ làm"/>
                 <ComboBoxItem Content="Tất cả"/>
             </ComboBox>
-            <Button Click="Button_Click" Content="Thêm" HorizontalAlignment="Left" Height="35" Margin="852,35,0,0" VerticalAlignment="Top" Width="141" Foreground="White" FontSize="16" Background="#FF2BA342" BorderBrush="{x:Null}"/>
+            <Button x:Name="btnAdd" Click="Button_Click" Content="Thêm" HorizontalAlignment="Left" Height="35" Margin="852,35,0,0" VerticalAlignment="Top" Width="141" Foreground="White" FontSize="16" Background="#FF2BA342" BorderBrush="{x:Null}"/>
         </Grid>
         <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Height="80" Margin="35,25,0,0" TextWrapping="Wrap" Text="Danh sách nhân viên" VerticalAlignment="Top" Width="485" FontSize="42"/>
         <TextBlock Text="CÔNG TY THNM BÃI ĐỖ XE THÔNG MINH KYPS" HorizontalAlignment="Left" Height="18.8" Margin="661.853,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="273.667" FontWeight="Bold" FontFamily="Segoe UI"/>

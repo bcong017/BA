@@ -13,7 +13,6 @@ namespace QLBaiDoXe
     /// </summary>
     public partial class admin : Window
     {
-        public static Account account = new Account();
         public static DateTime LoginTime = new DateTime();
         public static DateTime LogoutTime = new DateTime();
         public admin()
@@ -21,15 +20,15 @@ namespace QLBaiDoXe
             InitializeComponent();
             this.DataContext = new AdminViewModel();
             LoginTime = DateTime.Now;
-            StaffNameTxt.Text = MainWindow.currentUser.StaffName;
-            account = DataProvider.Ins.DB.Accounts.Where(x => x.StaffID == MainWindow.currentUser.StaffID).FirstOrDefault();
-            StaffAccountTxt.Text = account.AccountName;
+            txtbStaffName.Text = MainWindow.currentUser.StaffName;
+            txtbStaffAccount.Text = MainWindow.currentAccount.AccountName;
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            Staffing.LogOut(account.AccountName);
+            Staffing.LogOut(MainWindow.currentAccount.AccountName);
             MainWindow.currentUser = null;
+            MainWindow.currentAccount = null;
             MainWindow loginWindow = new MainWindow();
             loginWindow.Show();
             this.Close();

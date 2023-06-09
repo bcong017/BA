@@ -49,7 +49,7 @@ namespace QLBaiDoXe
 
         private void datePicker_Loaded(object sender, RoutedEventArgs e)
         {
-            datePicker.Text = staff.DateOfBirth.ToString();
+            dpBirthday.Text = staff.DateOfBirth.ToString();
         }
 
         private void cbxRole_Loaded(object sender, RoutedEventArgs e)
@@ -82,7 +82,7 @@ namespace QLBaiDoXe
                 MessageBox.Show("CMND/CCCD không hợp lệ!");
                 return;
             }
-            if (String.IsNullOrEmpty(datePicker.Text))
+            if (String.IsNullOrEmpty(dpBirthday.Text))
             {
                 if (cbxRole.Text == "Quản trị viên")
                     Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, null);
@@ -92,9 +92,9 @@ namespace QLBaiDoXe
             else
             {
                 if (cbxRole.Text == "Quản trị viên")
-                    Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
+                    Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "admin", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(dpBirthday.Text));
                 else
-                    Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "staff", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(datePicker.Text));
+                    Staffing.ChangeStaffInfo(staff.StaffID, txbName.Text, txbCivlID.Text, "staff", txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(dpBirthday.Text));
             }
         }
 

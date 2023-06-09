@@ -32,18 +32,18 @@ namespace QLBaiDoXe
             }
             if (cbxRole.Text == "Quản trị viên")
             {
-                if (string.IsNullOrEmpty(DatePicker.Text))
+                if (string.IsNullOrEmpty(dpBirthday.Text))
                     Staffing.AddAdminInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, null, txbAccName.Text, txbCivilID.Text);
                 else
-                    Staffing.AddAdminInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(DatePicker.Text), txbAccName.Text, txbCivilID.Text);
+                    Staffing.AddAdminInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(dpBirthday.Text), txbAccName.Text, txbCivilID.Text);
 
             }
             else
             {
-                if (string.IsNullOrEmpty(DatePicker.Text))
+                if (string.IsNullOrEmpty(dpBirthday.Text))
                     Staffing.AddStaffInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, null, txbAccName.Text, txbCivilID.Text);
                 else
-                    Staffing.AddStaffInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(DatePicker.Text), txbAccName.Text, txbCivilID.Text);
+                    Staffing.AddStaffInfo(txbName.Text, txbCivilID.Text, txbPhoneNumb.Text, txbAddress.Text, DateTime.Parse(dpBirthday.Text), txbAccName.Text, txbCivilID.Text);
 
             }
         }
