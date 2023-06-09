@@ -38,6 +38,7 @@
                  Grid.Column="1" Grid.Row="1" Foreground="#FFE27200" 
                  TextChanged="TextBox_TextChanged"
                  PreviewTextInput="CardID_PreviewTextInput"
+                 PreviewKeyDown="CardID_PreviewKeyDown"
                  />
         <TextBlock HorizontalAlignment="Left" Height="24.933" Margin="10,10,0,0" TextWrapping="Wrap" Text="Huỷ nhập thẻ" VerticalAlignment="Top" Width="86.667" TextDecorations="Underline" Foreground="#FFFFA03F" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"/>
         <Grid x:Name="Failed" Grid.ColumnSpan="2" d:IsHidden="True">

@@ -56,7 +56,7 @@ namespace QLBaiDoXe
                     MessageBox.Show("Không nhận dạng được mã thẻ", "Lỗi");
                     return;
                 }
-            MessageBox.Show("Đã xóa thẻ thành công!", "Thông báo!");
+                MessageBox.Show("Đã xóa thẻ thành công!", "Thông báo!");
                 ListThe.ItemsSource = null;
                 ListThe.ItemsSource = Cards.GetAllParkingCards();
             }
@@ -74,12 +74,18 @@ namespace QLBaiDoXe
 
         private void StateCbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CardSearchTxb_TextChanged(null,null);
+            CardSearchTxb_TextChanged(null, null);
         }
 
         private void CardSearchTxb_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            e.Handled = Classes.Validation.isNumber.IsMatch(e.Text);
+            e.Handled = !Classes.Validation.isNumber.IsMatch(e.Text);
         }
-    } 
+
+        private void CardSearchTxb_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Space)
+                e.Handled = true;
+        }
+    }
 }

@@ -29,7 +29,7 @@
                         <GridViewColumn Header="Mã thẻ">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding ParkingCardID}" HorizontalAlignment="Center" />
+                                    <TextBlock Text="{Binding ParkingCardID, StringFormat={}{0:D10}}" HorizontalAlignment="Center" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -60,7 +60,7 @@
             <materialDesign:PackIcon
                 Kind="Search"
                 Opacity=".56" Margin="437.054,30.528,0,0" Height="32.946" Width="32.946" RenderTransformOrigin="-0.152,0.591" />
-            <TextBox x:Name="CardSearchTxb" materialDesign:HintAssist.Hint="Tìm kiếm thẻ" HorizontalAlignment="Left" Height="39.946" Margin="46.559,30.528,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="423.441" FontSize="20" TextChanged="CardSearchTxb_TextChanged" PreviewTextInput="CardSearchTxb_PreviewTextInput"/>
+            <TextBox x:Name="CardSearchTxb" materialDesign:HintAssist.Hint="Tìm kiếm thẻ" HorizontalAlignment="Left" Height="39.946" Margin="46.559,30.528,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="423.441" FontSize="20" TextChanged="CardSearchTxb_TextChanged" PreviewTextInput="CardSearchTxb_PreviewTextInput" PreviewKeyDown="CardSearchTxb_PreviewKeyDown"/>
             <ComboBox x:Name="StateCbx" materialDesign:HintAssist.Hint="Tình trạng" HorizontalAlignment="Left" Height="35.474" Margin="500,35,0,0" VerticalAlignment="Top" Width="210" FontSize="20" SelectionChanged="StateCbx_SelectionChanged" >
                 <ComboBoxItem Content="Chưa dùng (0)"/>
                 <ComboBoxItem Content="Đang dùng (1)"/>
