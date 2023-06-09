@@ -112,7 +112,7 @@ namespace QLBaiDoXe
                         {
                             if (lineSeries[j].Title == vehicleFee[k].VehicleType.VehicleTypeName)
                             {
-                                income += vehicleFee[k].VehicleType.ParkingFee;
+                                income += vehicleFee[k].Fee;
                             }
                         }
                         total += income;

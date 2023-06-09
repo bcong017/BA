@@ -16,6 +16,7 @@ using AForge.Video.DirectShow;
 using QLBaiDoXe.ParkingLotModel;
 using QLBaiDoXe.DBClasses;
 using System.IO;
+using System.Reflection;
 
 namespace QLBaiDoXe
 {
@@ -189,8 +190,14 @@ namespace QLBaiDoXe
                             vehiclePlate_Copy2.Text = "------";
                             priceTag_Copy.Text = "------" + " đồng";
 
-                            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Pictures", $"DA{DateTime.Now.ToString("dd_MM_yyyy HH_mm_ss tt")}.jpg");
-                            DBClasses.ParkingVehicle.VehicleIn(vehiclePlate_Copy.Text.ToString().Trim(), long.Parse(ID), path);
+                            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                            string carPicFolderPath = Path.Combine(projectDirectory, "CarPic");
+
+                            //string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Pictures", $"DA{DateTime.Now.ToString("dd_MM_yyyy HH_mm_ss tt")}.jpg");
+                            string fileName = $"DA{DateTime.Now.ToString("dd_MM_yyyy HH_mm_ss tt")}.jpg";
+                            string path = Path.Combine(carPicFolderPath, fileName);
+
+                            DBClasses.ParkingVehicle.VehicleIn(vehiclePlate_Copy.Text.ToString().Trim(), long.Parse(ID), fileName);
                             temp1.Save(path);
 
                             VehicleIn_num.Text = DBClasses.ParkingVehicle.GetVehicleInNumber(date).ToString();
@@ -237,8 +244,12 @@ namespace QLBaiDoXe
 
                         long ID_temp = long.Parse(ID);
                         var vehicle = DataProvider.Ins.DB.Vehicles.FirstOrDefault(x => x.ParkingCardID == ID_temp && x.VehicleState == 1);
-                        string path = vehicle.VehicleImage;
-                        Uri imgDir = new Uri(path);
+                        string fileName = vehicle.VehicleImage;
+                        string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                        string path = Path.Combine(projectDirectory, "CarPic");
+                        string pathWithName = Path.Combine(path, fileName);
+                        //string path = vehicle.VehicleImage;
+                        Uri imgDir = new Uri(pathWithName);
                         image2.Source = new BitmapImage(imgDir);
 
                         dateOut_Copy.Text = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Year.ToString();
