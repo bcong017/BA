@@ -71,7 +71,7 @@ INSERT INTO Roles VALUES ('staff'), ('admin')
 INSERT INTO VehicleTypes (VehicleTypeName, ParkingFee) VALUES (N'Xe máy', 4000), (N'Xe hơi', 8000), (N'Xe đạp', 1000)
 
 INSERT INTO Staff (CivilID, StaffName, RoleID, PhoneNumber, StaffAddress, DateOfBirth) VALUES
-('079202002040', 'admin', 2, '09123784', '221 Baker St', '1/1/1990'),
+('079202002040', 'admin', 2, '0912378784', '221 Baker St', '1/1/1990'),
 ('079202005979', 'Chatte', 1, '0945655469', '1 Holmes St', '28/12/2002'),
 ('079202035060', 'StarGazer', 2, '0939843426', '3 Sherlock St', '22/6/2002'),
 ('079202003950', 'Dragon', 1, '0868410903', '5 Watson St', '20/9/2002'),
