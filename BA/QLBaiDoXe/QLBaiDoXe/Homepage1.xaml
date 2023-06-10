@@ -26,7 +26,7 @@
             <TextBlock HorizontalAlignment="Left" Height="22.4" Margin="369.067,387.462,0,0" TextWrapping="Wrap" Text="Loại xe" VerticalAlignment="Top" Width="78.067" FontSize="20" FontWeight="Medium"/>
             <TextBlock HorizontalAlignment="Left" Height="22.4" Margin="368.867,322.862,0,0" TextWrapping="Wrap" Text="Mã thẻ" VerticalAlignment="Top" Width="78.067" FontSize="20" FontWeight="Medium"/>
             <TextBlock x:Name="txblTypeIn" HorizontalAlignment="Left" Height="18.8" Margin="369.067,419.662,0,0" TextWrapping="Wrap" Text="Xe máy" VerticalAlignment="Top" Width="65.867" FontSize="16" FontWeight="UltraBold"/>
-            <Rectangle Fill="#FFD7D7D7" HorizontalAlignment="Left" Height="126.846" RadiusY="15" RadiusX="15" VerticalAlignment="Top" Width="179.501" Margin="367.833,30.4,0,0"/>
+            <Rectangle x:Name="imgPlateNumbIn" Fill="#FFD7D7D7" HorizontalAlignment="Left" Height="126.846" RadiusY="15" RadiusX="15" VerticalAlignment="Top" Width="179.501" Margin="367.833,30.4,0,0"/>
             <Border x:Name="border" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" Margin="32,33,0,0" Height="224" Width="311" HorizontalAlignment="Left">
                 <Image x:Name="imgCarIn" HorizontalAlignment="Stretch" Height="224" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="311"/>
             </Border>
@@ -49,7 +49,7 @@
             <TextBlock HorizontalAlignment="Left" Height="22.4" Margin="96.587,388.304,0,0" TextWrapping="Wrap" Text="Loại xe" VerticalAlignment="Top" Width="106.19" FontSize="20" FontWeight="Medium" TextAlignment="Right"/>
             <TextBlock HorizontalAlignment="Left" Height="22.4" Margin="96.587,323.104,0,0" TextWrapping="Wrap" Text="Mã thẻ" VerticalAlignment="Top" Width="106.19" FontSize="20" FontWeight="Medium" TextAlignment="Right"/>
             <TextBlock x:Name="txblTypeOut" HorizontalAlignment="Left" Height="18.8" Margin="112.043,418.237,0,0" TextWrapping="Wrap" Text="------" VerticalAlignment="Top" Width="89.716" TextAlignment="Right" FontSize="16" FontWeight="UltraBold"/>
-            <Rectangle Fill="#FFD7D7D7" HorizontalAlignment="Left" Height="126.846" RadiusY="15" RadiusX="15" VerticalAlignment="Top" Width="179.501" Margin="22.258,30.4,0,0"/>
+            <Rectangle x:Name="imgPlateNumbOut" Fill="#FFD7D7D7" HorizontalAlignment="Left" Height="126.846" RadiusY="15" RadiusX="15" VerticalAlignment="Top" Width="179.501" Margin="22.258,30.4,0,0"/>
             <Border BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" Margin="234,36,0,0" Height="222" Width="314" HorizontalAlignment="Left">
                 <Image x:Name="imgCarOut" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch"/>
             </Border>
