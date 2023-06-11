@@ -80,7 +80,7 @@
           ToolTip="MaterialDesignFloatingActionLightButton"
           IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Margin="21,629,1203,17" Height="Auto" Width="Auto" Click="Button_Click">
             <materialDesign:PackIcon
-            Kind="LogoutVariant" Height="33.6" Width="36.4"
+            Kind="LogoutVariant" Height="25" Width="25"
          />
         </Button>
         <TextBlock x:Name="txblChangePassword" 

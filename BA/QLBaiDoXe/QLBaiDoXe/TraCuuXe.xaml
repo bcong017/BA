@@ -136,10 +136,10 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Mã nhân viên phụ trách bãi">
+                        <GridViewColumn Header="Nhân viên phụ trách bãi">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding StaffID}" HorizontalAlignment="Center" />
+                                    <TextBlock Text="{Binding BindingView}" HorizontalAlignment="Center" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

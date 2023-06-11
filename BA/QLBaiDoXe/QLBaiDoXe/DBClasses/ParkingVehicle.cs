@@ -90,6 +90,7 @@ namespace QLBaiDoXe.DBClasses
         public class TempParkingVehicle: Vehicle
         {
             public int STT { get; set; }
+            public string BindingView { get => $"{this.Staff.StaffName} | {this.StaffID}"; }
             public TempParkingVehicle(Vehicle a, int b) 
             {
                 this.STT = b;
