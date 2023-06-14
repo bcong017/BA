@@ -74,9 +74,7 @@
           <Property Name="ParkingFee" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="Accounts_StaffID_FK">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
@@ -100,9 +98,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Timekeeps_StaffID_FK">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
           <End Role="Timekeeps" Type="Self.Timekeeps" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
@@ -250,9 +246,7 @@
           <NavigationProperty Name="Vehicles" Relationship="Self.Vehicles_VehicleTypeID_FK" FromRole="VehicleTypes" ToRole="Vehicles" />
         </EntityType>
         <Association Name="Accounts_StaffID_FK">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
           <End Role="Accounts" Type="Self.Account" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
@@ -276,9 +270,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Timekeeps_StaffID_FK">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
           <End Role="Timekeeps" Type="Self.Timekeep" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
