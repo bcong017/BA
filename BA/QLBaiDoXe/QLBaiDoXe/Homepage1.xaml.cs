@@ -211,7 +211,8 @@ namespace QLBaiDoXe
                 {
                     Dispatcher.BeginInvoke
                             (
-                            new Action(() => MessageBox.Show("Thẻ không tồn tại", "Lỗi!"))
+                            new Action(() => MessageBox.Show("Thẻ không tồn tại", "Lỗi!", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification)),
+                            DispatcherPriority.ApplicationIdle
                             );
                     txbCardIn.Clear();
                 }
@@ -225,48 +226,52 @@ namespace QLBaiDoXe
             if (txbCardOut.Text.Length == 10)
             {
                 string ID = (txbCardOut.Text).Trim();
-                if (DBClasses.Cards.CheckCardState(long.Parse(ID)) == 0)
+                long ID_temp = long.Parse(ID);
+                if (DataProvider.Ins.DB.ParkingCards.Any(x => x.ParkingCardID == ID_temp))
                 {
-                    Dispatcher.BeginInvoke
-                        (
-                        new Action(() => MessageBox.Show("Thẻ chưa được sử dụng", "Lỗi!", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification)),
-                        DispatcherPriority.ApplicationIdle
-                        );
-                    txbCardOut.Clear();
-                }
-                else
-                {
-                    //try
+                    if (DBClasses.Cards.CheckCardState(long.Parse(ID)) == 0)
                     {
+                        Dispatcher.BeginInvoke
+                            (
+                            new Action(() => MessageBox.Show("Thẻ chưa được sử dụng", "Lỗi!", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification)),
+                            DispatcherPriority.ApplicationIdle
+                            );
                         txbCardOut.Clear();
-
-                        long ID_temp = long.Parse(ID);
-                        var vehicle = DataProvider.Ins.DB.Vehicles.FirstOrDefault(x => x.ParkingCardID == ID_temp && x.VehicleState == 1);
-                        string fileName = vehicle.VehicleImage;
-                        string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                        string path = Path.Combine(projectDirectory, "CarPic");
-                        string pathWithName = Path.Combine(path, fileName);                       
-                        Uri imgDir = new Uri(pathWithName);
-                        imgCarOutPlate.Source = new BitmapImage(imgDir);
-
-                        txblDateOut.Text = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Year.ToString();
-                        txblTimeOut.Text = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
-                        txblDateInCheckOut.Text = vehicle.TimeStartedParking.Day.ToString() + "/" + vehicle.TimeStartedParking.Month.ToString() + "/" + vehicle.TimeStartedParking.Year.ToString();
-                        txblTimeInCheckOut.Text = vehicle.TimeStartedParking.Hour.ToString() + ":" + vehicle.TimeStartedParking.Minute.ToString() + ":" + vehicle.TimeStartedParking.Second.ToString();
-                        txblDateIn.Text = "--/--/----";
-                        txblTimeIn.Text = "00:00:00";
-                        txblTypeOut.Text = vehicle.VehicleType.VehicleTypeName;
-                        txblPriceTagOut.Text = vehicle.VehicleType.ParkingFee.ToString() + " đồng";
-
-                        DBClasses.ParkingVehicle.VehicleOut(long.Parse(ID), MainWindow.currentUser.StaffID);
-
-                        txblAmountOut.Text = ParkingVehicle.GetVehicleOutNumber(date).ToString();
-                        txblAmountParked.Text = ParkingVehicle.GetParkedVehicleNumber().ToString();
                     }
-                    //catch (Exception ex)
-                    //{
-                    //    MessageBox.Show("Phần mềm bị lỗi: " + ex.Message + " Vui lòng liên hệ nhân viên bảo trì để biết thêm chi tiết", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                    //}
+                    else
+                    {
+                        //try
+                        {
+                            txbCardOut.Clear();
+
+                            
+                            var vehicle = DataProvider.Ins.DB.Vehicles.FirstOrDefault(x => x.ParkingCardID == ID_temp && x.VehicleState == 1);
+                            string fileName = vehicle.VehicleImage;
+                            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                            string path = Path.Combine(projectDirectory, "CarPic");
+                            string pathWithName = Path.Combine(path, fileName);
+                            Uri imgDir = new Uri(pathWithName);
+                            imgCarOutPlate.Source = new BitmapImage(imgDir);
+
+                            txblDateOut.Text = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Year.ToString();
+                            txblTimeOut.Text = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
+                            txblDateInCheckOut.Text = vehicle.TimeStartedParking.Day.ToString() + "/" + vehicle.TimeStartedParking.Month.ToString() + "/" + vehicle.TimeStartedParking.Year.ToString();
+                            txblTimeInCheckOut.Text = vehicle.TimeStartedParking.Hour.ToString() + ":" + vehicle.TimeStartedParking.Minute.ToString() + ":" + vehicle.TimeStartedParking.Second.ToString();
+                            txblDateIn.Text = "--/--/----";
+                            txblTimeIn.Text = "00:00:00";
+                            txblTypeOut.Text = vehicle.VehicleType.VehicleTypeName;
+                            txblPriceTagOut.Text = vehicle.VehicleType.ParkingFee.ToString() + " đồng";
+
+                            DBClasses.ParkingVehicle.VehicleOut(long.Parse(ID), MainWindow.currentUser.StaffID);
+
+                            txblAmountOut.Text = ParkingVehicle.GetVehicleOutNumber(date).ToString();
+                            txblAmountParked.Text = ParkingVehicle.GetParkedVehicleNumber().ToString();
+                        }
+                        //catch (Exception ex)
+                        //{
+                        //    MessageBox.Show("Phần mềm bị lỗi: " + ex.Message + " Vui lòng liên hệ nhân viên bảo trì để biết thêm chi tiết", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                        //}
+                    }
                 }
             }
         }

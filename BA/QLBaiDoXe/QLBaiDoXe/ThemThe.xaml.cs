@@ -19,7 +19,7 @@ namespace QLBaiDoXe
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int type = 0;
+                int type = 0;
             if (cbxType.SelectedIndex == 1)
                 type= 1;
             if (txbCardID.Text.Length == 10)
@@ -44,7 +44,7 @@ namespace QLBaiDoXe
 
         private void CardID_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            e.Handled = !Classes.Validation.isNumber.IsMatch(txbCardID.Text);
+            e.Handled = !Classes.Validation.isNumber.IsMatch(e.Text);
         }
 
         private void CardID_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
